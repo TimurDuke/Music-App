@@ -1,11 +1,11 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const ArtistSchema = new Schema({
    name: {
        type: String,
        maxLength: 255,
-       minLength: 1,
+       minLength: 2,
        required: true,
        unique: true,
    },
