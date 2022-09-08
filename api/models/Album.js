@@ -16,7 +16,8 @@ const AlbumSchema = new Schema({
     release: {
         type: Date,
         required: true,
-    }
+    },
+    image: String,
 });
 
 AlbumSchema.plugin(idValidator, {error: 'Bad ID value for artist'});
