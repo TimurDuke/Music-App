@@ -29,15 +29,15 @@ router.get('/', async (req, res) => {
         } catch (e) {
             return res.status(400).send(e.message);
         }
-    }
-
-    try {
-        const artists = await Album
-            .find()
-            .populate('artist', 'name');
-        res.send(artists);
-    } catch {
-        res.sendStatus(500);
+    } else {
+        try {
+            const artists = await Album
+                .find()
+                .populate('artist', 'name');
+            res.send(artists);
+        } catch {
+            res.sendStatus(500);
+        }
     }
 });
 
