@@ -20,27 +20,48 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', async (req, res) => {
-    const {artist} = req.query;
+    const { artist } = req.query;
 
     if (artist) {
         try {
             const albums = await Album.find({artist: artist});
             res.send(albums);
         } catch (e) {
-            res.status(400).send(e.message);
+            return res.status(400).send(e.message);
         }
     }
 
     try {
-        const artists = await Album.find();
+        const artists = await Album
+            .find()
+            .populate('artist', 'name');
         res.send(artists);
     } catch {
         res.sendStatus(500);
     }
 });
 
-// router.post('/', upload.single('image'), async (req, res) => {
-//
-// });
+router.post('/', upload.single('image'), async (req, res) => {
+    const { title, release, artist } = req.body;
+
+    if (!title || !release || !artist) {
+        return res.status(400).send({error: 'Data not valid'});
+    }
+
+    const albumData = {title, release, artist, image: null};
+
+    if (req.file) {
+        albumData.image = req.file.filename;
+    }
+
+    const album = new Album(albumData);
+
+    try {
+        await album.save();
+        res.send(album);
+    } catch (e) {
+        res.status(400).send({error: e.message});
+    }
+});
 
 module.exports = router;

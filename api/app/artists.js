@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-    const {name, information} = req.body;
+    const { name, information } = req.body;
 
     if (!name) {
         return res.status(400).send({error: 'The name field must be filled in.'});
