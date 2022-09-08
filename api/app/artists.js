@@ -22,6 +22,7 @@ const upload = multer({storage});
 router.get('/', async (req, res) => {
     try {
         const artists = await Artist.find();
+
         res.send(artists);
     } catch {
         res.sendStatus(500);
@@ -49,6 +50,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 
     try {
         await artist.save();
+
         res.send(artist);
     } catch (e) {
         res.status(400).send({error: e.message});

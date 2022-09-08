@@ -8,5 +8,5 @@ module.exports = {
     mongo: {
         db: 'mongodb://localhost/music',
         options: {useNewUrlParser: true},
-    }
+    },
 };

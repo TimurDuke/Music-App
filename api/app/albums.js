@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
     if (artist) {
         try {
             const albums = await Album.find({artist: artist});
+
             res.send(albums);
         } catch (e) {
             return res.status(400).send({error: e.message});
@@ -36,6 +37,7 @@ router.get('/', async (req, res) => {
             const artists = await Album
                 .find()
                 .populate('artist', 'name');
+
             res.send(artists);
         } catch {
             res.sendStatus(500);
@@ -60,6 +62,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 
     try {
         await album.save();
+
         res.send(album);
     } catch (e) {
         res.status(400).send({error: e.message});

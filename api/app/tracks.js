@@ -6,11 +6,12 @@ const Album = require('../models/Album');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const {album, artist} = req.query;
+    const { album, artist } = req.query;
 
     if (album) {
         try {
             const tracks = await Track.find({album: album});
+
             res.send(tracks);
         } catch (e) {
             res.status(400).send({error: e.message});
@@ -38,6 +39,7 @@ router.get('/', async (req, res) => {
             const tracks = await Track
                 .find()
                 .populate('album', 'title');
+
             res.send(tracks);
         } catch {
             res.sendStatus(500);
@@ -46,7 +48,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {title, album, duration} = req.body;
+    const { title, album, duration } = req.body;
 
     if (!title || !album || !duration) {
         return res.status(400).send({error: 'Data not valid'});
@@ -58,6 +60,7 @@ router.post('/', async (req, res) => {
 
     try {
         await track.save();
+
         res.send(track);
     } catch (e) {
         res.status(400).send(e.message);
