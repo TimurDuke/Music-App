@@ -20,6 +20,7 @@ const TrackSchema = new Schema({
 });
 
 TrackSchema.plugin(idValidator, {error: 'Bad ID value for album'});
+
 const Track = model("Track", TrackSchema);
 
 module.exports = Track;
