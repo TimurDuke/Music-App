@@ -19,9 +19,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-// router.get('/', async (req, res) => {
-//
-// });
+router.get('/', async (req, res) => {
+    try {
+        const artists = await Artist.find();
+        res.send(artists);
+    } catch {
+        res.sendStatus(500);
+    }
+});
 
 router.post('/', upload.single('image'), async (req, res) => {
     const {name, information} = req.body;
@@ -33,6 +38,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     const artistData = {
         name,
         information: information || null,
+        image: null,
     };
 
     if (req.file) {
