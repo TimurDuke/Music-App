@@ -13,7 +13,7 @@ const ArtistSchema = new Schema({
     image: String,
 });
 
-ArtistSchema.plugin(uniqueValidator, {message: "An artist with that name already exists."});
+ArtistSchema.plugin(uniqueValidator, {error: "An artist with that name already exists."});
 
 const Artist = model("Artist", ArtistSchema);
 
