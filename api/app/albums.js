@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
     if (artist) {
         try {
-            const albums = await Album.find({artist: artist});
+            const albums = await Album.find({artist});
 
             res.send(albums);
         } catch (e) {

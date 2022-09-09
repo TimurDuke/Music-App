@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 
     if (album) {
         try {
-            const tracks = await Track.find({album: album});
+            const tracks = await Track.find({album});
 
             res.send(tracks);
         } catch (e) {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         }
     } else if (artist) {
         try {
-            await Album.find({artist: artist}).exec(async (err, albums) => {
+            await Album.find({artist}).exec(async (err, albums) => {
                 if (err) throw new Error();
 
                 const tracks = (await Promise.all(
