@@ -30,6 +30,13 @@ UserSchema.pre('save', async function(next) {
     next();
 });
 
+UserSchema.set('toJSON', {
+   transform: (doc, ret, options) => {
+       delete ret.password;
+       return ret;
+   },
+});
+
 const User = model("User", UserSchema);
 
 module.exports = User;
