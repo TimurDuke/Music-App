@@ -15,11 +15,33 @@ router.post('/', async (req, res) => {
     const user = new User(userData);
 
     try {
+        user.generateToken();
         await user.save();
         res.send(user);
     } catch (e) {
         res.status(400).send({error: e.message});
     }
+});
+
+router.post('/sessions', async (req, res) => {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({username});
+
+    if (!user) {
+        return res.status(401).send({error: 'Username not found'});
+    }
+
+    const isMatch = await user.checkPassword(password);
+
+    if (!isMatch) {
+        return res.status(401).send({error: 'Password is wrong'});
+    }
+
+    const token = user.generateToken();
+    await user.save();
+
+    res.send({token});
 });
 
 module.exports = router;

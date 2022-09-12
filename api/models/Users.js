@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     }
 });
 
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
@@ -32,18 +32,18 @@ UserSchema.pre('save', async function(next) {
 });
 
 UserSchema.set('toJSON', {
-   transform: (doc, ret, options) => {
-       delete ret.password;
-       return ret;
-   },
+    transform: (doc, ret, options) => {
+        delete ret.password;
+        return ret;
+    },
 });
 
 UserSchema.methods.checkPassword = function (password) {
-  return bcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.password);
 };
 
 UserSchema.methods.generateToken = function () {
-  this.token = uniqid();
+    return this.token = uniqid();
 };
 
 const User = model("User", UserSchema);
