@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const uniqid = require("uniqid");
 
 const { Schema, model } = mongoose;
 
@@ -15,10 +16,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    // token: {
-    //     type: String,
-    //     required: true,
-    // }
+    token: {
+        type: String,
+        required: true,
+    }
 });
 
 UserSchema.pre('save', async function(next) {
@@ -36,6 +37,14 @@ UserSchema.set('toJSON', {
        return ret;
    },
 });
+
+UserSchema.methods.checkPassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
+UserSchema.methods.generateToken = function () {
+  this.token = uniqid();
+};
 
 const User = model("User", UserSchema);
 
