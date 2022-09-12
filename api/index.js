@@ -8,6 +8,7 @@ const config = require('./config');
 const artists = require('./app/artists');
 const albums = require('./app/albums');
 const tracks = require('./app/tracks');
+const users = require('./app/users');
 
 const app = express();
 const PORT = 8000;
@@ -22,6 +23,7 @@ const run = async () => {
     app.use('/artists', artists);
     app.use('/albums', albums);
     app.use('/tracks', tracks);
+    app.use('/users', users);
 
     app.listen(PORT, () => {
         console.log(`Server started on ${PORT} port!`);
