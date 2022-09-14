@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema, model } = mongoose;
+const {Schema, model} = mongoose;
 
 const TrackHistorySchema = new Schema({
     user: {
@@ -14,7 +14,7 @@ const TrackHistorySchema = new Schema({
         required: true,
     },
     datetime: {
-        type: Date,
+        type: String,
         required: true,
     }
 });

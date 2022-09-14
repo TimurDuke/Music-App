@@ -6,7 +6,7 @@ const Track = require('../models/Track');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { track } = req.body;
+    const { track, datetime } = req.body;
 
     const token = req.get('Authorization');
 
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
         const trackHistoryData = {
             track: listenedTrack,
             user,
-            datetime: Date.now(),
+            datetime: Date.parse(datetime) ? datetime : new Date().toLocaleDateString(),
         };
 
         const trackHistory = new TrackHistory(trackHistoryData);
