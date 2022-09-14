@@ -21,11 +21,7 @@ router.get('/', async (req, res) => {
             await Album.find({artist}).exec(async (err, albums) => {
                 if (err) throw new Error();
 
-                const tracks = (await Promise.all(
-                    albums.map(album => {
-                        return Track.find({album: album['_id']});
-                    })
-                )).flat();
+                const tracks = await Track.find({album: {$in: albums}});
 
                 res.send(tracks);
             });
