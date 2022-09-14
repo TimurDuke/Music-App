@@ -45,6 +45,22 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const album = await Album.findById(id);
+
+        if (!album) {
+            return res.status(404).send({error: "There is no album with this id."});
+        }
+
+        res.send(album);
+    } catch {
+        res.status(404).send({error: "There is no album with this id."});
+    }
+});
+
 router.post('/', upload.single('image'), async (req, res) => {
     const { title, release, artist } = req.body;
 
