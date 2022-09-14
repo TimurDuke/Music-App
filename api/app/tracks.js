@@ -21,6 +21,10 @@ router.get('/', async (req, res) => {
             await Album.find({artist}).exec(async (err, albums) => {
                 if (err) throw new Error();
 
+                if (!albums.length) {
+                    return res.status(404).send({error: "No tracks found for this artist."});
+                }
+
                 const tracks = await Track.find({album: {$in: albums}});
 
                 res.send(tracks);
