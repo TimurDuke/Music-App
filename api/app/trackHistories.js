@@ -10,6 +10,10 @@ router.post('/', async (req, res) => {
 
     const token = req.get('Authorization');
 
+    if (isNaN(new Date(datetime).getDate())) {
+        return res.status(400).send({error: "Invalid date"});
+    }
+
     if (!token) {
         return res.status(401).send({error: "No token presented"});
     }
@@ -27,11 +31,7 @@ router.post('/', async (req, res) => {
             return res.status(400).send({error: "Track not found"});
         }
 
-        const trackHistoryData = {
-            track: listenedTrack,
-            user,
-            datetime: Date.parse(datetime) ? datetime : new Date().toLocaleDateString(),
-        };
+        const trackHistoryData = {track: listenedTrack, user, datetime};
 
         const trackHistory = new TrackHistory(trackHistoryData);
 
