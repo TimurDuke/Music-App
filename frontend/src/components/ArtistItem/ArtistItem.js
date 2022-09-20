@@ -16,7 +16,7 @@ const ArtistItem = ({name, image, id}) => {
                     <Button
                         variant='outlined'
                         component={Link}
-                        to={`/artist/${id}`}
+                        to={`/artist/${id}/${name}`}
                     >
                         Подробнее
                     </Button>

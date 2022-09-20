@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getAlbums} from "../../store/actions/artistsActions";
-import {Grid} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import {apiUrl} from "../../config";
 
@@ -15,6 +15,9 @@ const Artist = ({match}) => {
 
     return (
         <>
+            <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
+                <span style={{opacity: 0.5, fontSize: '22px'}}>Performer: </span> {match.params.artist}
+            </Typography>
             <Grid item container spacing={3} justifyContent='center'>
                 {!!albums.length ? albums.map(album => (
                     <AlbumItem

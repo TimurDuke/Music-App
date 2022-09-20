@@ -9,7 +9,7 @@ const App = () => {
       <Layout>
         <Switch>
           <Route path='/' exact component={Artists}/>
-          <Route path='/artist/:id' component={Artist}/>
+          <Route path='/artist/:id/:artist' component={Artist}/>
         </Switch>
       </Layout>
   );
