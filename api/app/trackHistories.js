@@ -6,13 +6,9 @@ const Track = require('../models/Track');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { track, datetime } = req.body;
+    const { track } = req.body;
 
     const token = req.get('Authorization');
-
-    if (isNaN(new Date(datetime).getDate())) {
-        return res.status(400).send({error: "Invalid date"});
-    }
 
     if (!token) {
         return res.status(401).send({error: "No token presented"});
@@ -31,7 +27,11 @@ router.post('/', async (req, res) => {
             return res.status(400).send({error: "Track not found"});
         }
 
-        const trackHistoryData = {track: listenedTrack, user, datetime};
+        const trackHistoryData = {
+            track: listenedTrack['_id'],
+            user: user['_id'],
+            datetime: new Date().toLocaleDateString()
+        };
 
         const trackHistory = new TrackHistory(trackHistoryData);
 
