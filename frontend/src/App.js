@@ -8,6 +8,7 @@ const App = () => {
       <Layout>
         <Switch>
           <Route path='/' exact component={Artists}/>
+          {/*<Route path='/artist/:id' component={Artists}/>*/}
         </Switch>
       </Layout>
   );
