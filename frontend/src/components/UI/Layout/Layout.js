@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Container, Typography} from "@mui/material";
+import {AppBar, Container, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
 const Layout = ({children}) => {
@@ -15,6 +15,7 @@ const Layout = ({children}) => {
                     Music Application
                 </Typography>
             </AppBar>
+            <Toolbar sx={{marginBottom: '20px'}}/>
             <Container maxWidth="xl">
                 {children}
             </Container>
