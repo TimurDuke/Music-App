@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
             const response = await Promise.all(albums.map(async album => {
                 const tracks = await Track.find({album: album._id});
 
-                return {...album['_doc'], count: tracks.length};
+                return {...album['_doc'], tracksCount: tracks.length};
             }));
 
             res.send(response);

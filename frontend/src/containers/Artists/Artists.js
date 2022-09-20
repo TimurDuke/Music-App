@@ -21,7 +21,7 @@ const Artists = () => {
                         key={artist['_id']}
                         id={artist['_id']}
                         name={artist.name}
-                        image={apiUrl + '/uploads/' + artist.image}
+                        image={artist.image ? apiUrl + '/uploads/' + artist.image : null}
                     />
                 )) : null}
             </Grid>
