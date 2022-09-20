@@ -5,6 +5,7 @@ const path = require('path');
 
 const Album = require('../models/Album');
 const config = require('../config');
+const Track = require("../models/Track");
 
 const router = express.Router();
 
@@ -26,7 +27,13 @@ router.get('/', async (req, res) => {
         try {
             const albums = await Album.find({artist});
 
-            res.send(albums);
+            const response = await Promise.all(albums.map(async album => {
+                const tracks = await Track.find({album: album._id});
+
+                return {...album['_doc'], count: tracks.length};
+            }));
+
+            res.send(response);
         } catch (e) {
             return res.status(400).send({error: e.message});
         }
