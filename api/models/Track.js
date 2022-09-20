@@ -17,6 +17,10 @@ const TrackSchema = new Schema({
         type: String,
         required: true,
     },
+    number: {
+        type: Number,
+        required: true,
+    }
 });
 
 TrackSchema.plugin(idValidator, {error: 'Bad ID value for album'});

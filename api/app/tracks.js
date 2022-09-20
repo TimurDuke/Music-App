@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 
     if (album) {
         try {
-            const tracks = await Track.find({album});
+            const tracks = await Track.find({album}).sort({number: 1});
 
             res.send(tracks);
         } catch (e) {
@@ -48,13 +48,13 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { title, album, duration } = req.body;
+    const { title, album, duration, number } = req.body;
 
-    if (!title || !album || !duration) {
+    if (!title || !album || !duration || !number) {
         return res.status(400).send({error: 'Data not valid'});
     }
 
-    const trackData = {title, album, duration};
+    const trackData = {title, album, duration, number};
 
     const track = new Track(trackData);
 
