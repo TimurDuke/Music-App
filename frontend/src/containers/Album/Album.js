@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {clearState, getTracks} from "../../store/actions/artistsActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
 import {Box, Typography} from "@mui/material";
+import Preloader from "../../components/UI/Preloader/Preloader";
 
 const Album = ({match}) => {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Album = ({match}) => {
 
     const artistName = useSelector(state => state.artists.artistName);
     const albumTitle = useSelector(state => state.artists.albumTitle);
+    const loading = useSelector(state => state.artists.loading);
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));
@@ -22,6 +24,9 @@ const Album = ({match}) => {
 
     return (
         <>
+            <Preloader
+                showPreloader={loading}
+            />
             <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
                 <span style={{opacity: 0.5, fontSize: '22px'}}>
                     Performer:

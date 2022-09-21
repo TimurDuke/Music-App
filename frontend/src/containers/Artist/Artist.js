@@ -4,12 +4,14 @@ import {clearState, getAlbums} from "../../store/actions/artistsActions";
 import {Grid, Typography} from "@mui/material";
 import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import {apiUrl} from "../../config";
+import Preloader from "../../components/UI/Preloader/Preloader";
 
 const Artist = ({match}) => {
     const dispatch = useDispatch();
 
     const albums = useSelector(state => state.artists.albums);
     const artistName = useSelector(state => state.artists.artistName);
+    const loading = useSelector(state => state.artists.loading);
 
     useEffect(() => {
         dispatch(getAlbums(match.params.id));
@@ -21,6 +23,9 @@ const Artist = ({match}) => {
 
     return (
         <>
+            <Preloader
+                showPreloader={loading}
+            />
             <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
                 <span style={{opacity: 0.5, fontSize: '22px'}}>
                     Performer:
