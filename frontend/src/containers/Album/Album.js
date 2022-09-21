@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {Box, Typography} from "@mui/material";
+
 import {clearState, getTracks} from "../../store/actions/artistsActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
-import {Box, Typography} from "@mui/material";
 import Preloader from "../../components/UI/Preloader/Preloader";
 
 const Album = ({match}) => {

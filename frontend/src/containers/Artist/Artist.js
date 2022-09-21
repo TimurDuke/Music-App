@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {clearState, getAlbums} from "../../store/actions/artistsActions";
 import {Grid, Typography} from "@mui/material";
-import AlbumItem from "../../components/AlbumItem/AlbumItem";
+
 import {apiUrl} from "../../config";
+import {clearState, getAlbums} from "../../store/actions/artistsActions";
+import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 
 const Artist = ({match}) => {

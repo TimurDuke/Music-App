@@ -5,16 +5,14 @@ import Artists from "./containers/Artists/Artists";
 import Artist from "./containers/Artist/Artist";
 import Album from "./containers/Album/Album";
 
-const App = () => {
-    return (
-        <Layout>
-            <Switch>
-                <Route path='/' exact component={Artists}/>
-                <Route path='/artist/:artist/:id' component={Artist}/>
-                <Route path='/album/:artist/:album/:id' component={Album}/>
-            </Switch>
-        </Layout>
-    );
-};
+const App = () => (
+    <Layout>
+        <Switch>
+            <Route path='/' exact component={Artists}/>
+            <Route path='/artist/:artist/:id' component={Artist}/>
+            <Route path='/album/:artist/:album/:id' component={Album}/>
+        </Switch>
+    </Layout>
+);
 
 export default App;
