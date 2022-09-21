@@ -10,8 +10,8 @@ const App = () => {
         <Layout>
             <Switch>
                 <Route path='/' exact component={Artists}/>
-                <Route path='/artist/:id' component={Artist}/>
-                <Route path='/album/:id' component={Album}/>
+                <Route path='/artist/:artist/:id' component={Artist}/>
+                <Route path='/album/:artist/:album/:id' component={Album}/>
             </Switch>
         </Layout>
     );

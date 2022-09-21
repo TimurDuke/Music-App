@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getTracks} from "../../store/actions/artistsActions";
+import {clearState, getTracks} from "../../store/actions/artistsActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
 import {Box, Typography} from "@mui/material";
 
@@ -8,11 +8,16 @@ const Album = ({match}) => {
     const dispatch = useDispatch();
 
     const tracks = useSelector(state => state.artists.tracks);
+
     const artistName = useSelector(state => state.artists.artistName);
     const albumTitle = useSelector(state => state.artists.albumTitle);
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));
+
+        return () => {
+            dispatch(clearState());
+        };
     }, [dispatch, match.params.id]);
 
     return (
@@ -20,12 +25,12 @@ const Album = ({match}) => {
             <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
                 <span style={{opacity: 0.5, fontSize: '22px'}}>
                     Performer:
-                </span> {artistName}
+                </span> {!!artistName ? artistName : match.params.artist}
             </Typography>
             <Typography variant='h5' sx={{textAlign: 'center'}} gutterBottom>
                 <span style={{opacity: 0.5, fontSize: '22px'}}>
                     Album:
-                </span> {albumTitle}
+                </span> {!!albumTitle ? albumTitle : match.params.album}
             </Typography>
             <Box
                 sx={{
@@ -42,7 +47,7 @@ const Album = ({match}) => {
                         title={track.title}
                         duration={track.duration}
                     />
-                )) :  <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
+                )) : <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
             </Box>
         </>
     );

@@ -39,7 +39,7 @@ const ArtistItem = ({name, image, id}) => {
                         size='small'
                         variant='outlined'
                         component={Link}
-                        to={`/artist/${id}`}
+                        to={`/artist/${name}/${id}`}
                     >
                         Подробнее
                     </Button>

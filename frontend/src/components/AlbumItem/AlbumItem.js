@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
-const AlbumItem = ({image, title, release, id, tracksCount}) => {
+const AlbumItem = ({image, title, release, id, tracksCount, artistName}) => {
     return (
         <Grid item xs={12} sm={3} lg={2}>
             <Card
@@ -46,7 +46,7 @@ const AlbumItem = ({image, title, release, id, tracksCount}) => {
                     <Button
                         variant='outlined'
                         component={Link}
-                        to={'/album/' + id}
+                        to={`/album/${artistName}/${title}/${id}`}
                         size='small'
                     >
                         Tracks

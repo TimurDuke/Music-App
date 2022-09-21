@@ -1,5 +1,5 @@
 import React from 'react';
-import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const TrackItem = ({number, title, duration}) => {

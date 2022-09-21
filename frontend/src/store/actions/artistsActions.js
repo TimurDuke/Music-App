@@ -1,5 +1,9 @@
 import axiosApi from "../../axiosApi";
 
+export const CLEAR_STATE = 'CLEAR_STATE';
+
+export const clearState = () => ({type: CLEAR_STATE});
+
 export const GET_ARTISTS_REQUEST = 'GET_ARTISTS_REQUEST';
 export const GET_ARTISTS_SUCCESS = 'GET_ARTISTS_SUCCESS';
 export const GET_ARTISTS_FAILURE = 'GET_ARTISTS_FAILURE';
