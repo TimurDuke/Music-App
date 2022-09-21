@@ -10,7 +10,11 @@ router.get('/', async (req, res) => {
 
     if (album) {
         try {
-            const tracks = await Track.find({album}).sort({number: 1});
+            const tracks = await Track
+                .find({album})
+                .sort({number: 1})
+                .populate('album', 'title')
+                .populate({path: 'album', select: 'title', populate: {path: "artist", select: 'name'}});
 
             res.send(tracks);
         } catch (e) {

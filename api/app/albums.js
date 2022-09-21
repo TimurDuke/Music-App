@@ -25,7 +25,10 @@ router.get('/', async (req, res) => {
 
     if (artist) {
         try {
-            const albums = await Album.find({artist}).sort({"release": 1});
+            const albums = await Album
+                .find({artist})
+                .sort({"release": 1})
+                .populate('artist', 'name');
 
             const response = await Promise.all(albums.map(async album => {
                 const tracks = await Track.find({album: album._id});
