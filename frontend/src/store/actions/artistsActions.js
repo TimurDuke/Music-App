@@ -44,3 +44,26 @@ export const getAlbums = artistId => {
         }
     };
 };
+
+export const GET_TRACKS_REQUEST = 'GET_TRACKS_REQUEST';
+export const GET_TRACKS_SUCCESS = 'GET_TRACKS_SUCCESS';
+export const GET_TRACKS_FAILURE = 'GET_TRACKS_FAILURE';
+
+const getTracksRequest = () => ({type: GET_TRACKS_REQUEST});
+const getTracksSuccess = tracks => ({type: GET_TRACKS_SUCCESS, tracks});
+const getTracksFailure = error => ({type: GET_TRACKS_FAILURE, error});
+
+export const getTracks = albumId => {
+    return async dispatch => {
+        try {
+            dispatch(getTracksRequest());
+
+            const {data} = await axiosApi.get('/tracks?album=' + albumId);
+            if (data) {
+                dispatch(getTracksSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getTracksFailure(e));
+        }
+    };
+};

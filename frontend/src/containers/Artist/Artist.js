@@ -7,19 +7,24 @@ import {apiUrl} from "../../config";
 
 const Artist = ({match}) => {
     const dispatch = useDispatch();
+
     const albums = useSelector(state => state.artists.albums);
+    const artistName = useSelector(state => state.artists.artistName);
 
     useEffect(() => {
         dispatch(getAlbums(match.params.id));
-    }, [dispatch]);
+    }, [dispatch, match.params.id]);
 
     return (
         <>
             <Typography variant='h4' sx={{textAlign: 'center'}} gutterBottom>
-                <span style={{opacity: 0.5, fontSize: '22px'}}>Performer: </span> {match.params.artist}
+                <span style={{opacity: 0.5, fontSize: '22px'}}>
+                    Performer:
+                </span>
+                {artistName}
             </Typography>
-            <Grid item container spacing={3} justifyContent='center'>
-                {!!albums.length ? albums.map(album => (
+            {!!albums.length ? <Grid container spacing={5}>
+                {albums.map(album => (
                     <AlbumItem
                         key={album['_id']}
                         id={album['_id']}
@@ -28,8 +33,8 @@ const Artist = ({match}) => {
                         tracksCount={album.tracksCount}
                         image={album.image ? apiUrl + '/uploads/' + album.image : null}
                     />
-                )): <h2>This artist has no albums.</h2>}
-            </Grid>
+                ))}
+            </Grid> : <h2 style={{textAlign: 'center'}}>This artist has no albums.</h2>}
         </>
     );
 };
