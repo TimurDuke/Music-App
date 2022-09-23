@@ -9,7 +9,7 @@ export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
 
 const registerUserRequest = () => ({type: REGISTER_USER_REQUEST});
-const registerUserSuccess = () => ({type: REGISTER_USER_SUCCESS});
+const registerUserSuccess = userData => ({type: REGISTER_USER_SUCCESS, userData});
 const registerUserFailure = error => ({type: REGISTER_USER_FAILURE, error});
 
 export const registerUser = userData => {
@@ -17,10 +17,12 @@ export const registerUser = userData => {
         try {
             dispatch(registerUserRequest());
 
-            await axiosApi.post('/users', userData);
+            const {data} = await axiosApi.post('/users', userData);
 
-            dispatch(registerUserSuccess());
-            dispatch(historyPush('/'));
+            if (data) {
+                dispatch(registerUserSuccess(data));
+                dispatch(historyPush('/'));
+            }
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(registerUserFailure(e.response.data));

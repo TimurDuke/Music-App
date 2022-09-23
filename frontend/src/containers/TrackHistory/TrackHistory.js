@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getHistory} from "../../store/actions/musicActions";
 import {Box, List} from "@mui/material";
 import HistoryItem from "../../components/HistoryItem/HistoryItem";
-import Redirect from "react-router-dom/es/Redirect";
+import {Redirect} from "react-router-dom";
 
 const TrackHistory = () => {
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const TrackHistory = () => {
                             datetime={history.datetime}
                         />
                     ))}
-                </List> : null
+                </List> : <h2 style={{textAlign: 'center'}}>You don't have track history yet.</h2>
             }
         </Box>
     );

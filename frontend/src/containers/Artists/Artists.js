@@ -11,7 +11,7 @@ const Artists = () => {
     const dispatch = useDispatch();
 
     const artists = useSelector(state => state.music.artists);
-    const loading = useSelector(state => state.music.loading);
+    const loading = useSelector(state => state.music.artistsLoading);
 
     useEffect(() => {
         dispatch(getArtists());

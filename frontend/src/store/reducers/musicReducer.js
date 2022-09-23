@@ -1,5 +1,5 @@
 import {
-    CLEAR_STATE,
+    CLEAR_STATE, CREATE_HISTORY_FAILURE, CREATE_HISTORY_REQUEST, CREATE_HISTORY_SUCCESS,
     GET_ALBUMS_FAILURE,
     GET_ALBUMS_REQUEST,
     GET_ALBUMS_SUCCESS,
@@ -45,7 +45,7 @@ const musicReducer = (state = initialState, actions) => {
         case GET_ALBUMS_SUCCESS:
             return {
                 ...state,
-                tracksLoading: false,
+                albumsLoading: false,
                 albumsError: null,
                 albums: actions.albums,
                 artistName: actions.albums[0].artist.name,
@@ -73,6 +73,14 @@ const musicReducer = (state = initialState, actions) => {
             return {...state, tracksHistoryLoading: false, tracksHistoryError: null, tracksHistory: actions.history};
         case GET_HISTORY_FAILURE:
             return {...state, tracksHistoryLoading: false, tracksHistoryError: actions.error};
+
+        case CREATE_HISTORY_REQUEST:
+            return {...state, tracksHistoryLoading: true, tracksHistoryError: null};
+        case CREATE_HISTORY_SUCCESS:
+            return {...state, tracksHistoryLoading: false, tracksHistoryError: null};
+        case CREATE_HISTORY_FAILURE:
+            return {...state, tracksHistoryLoading: false, tracksHistoryError: actions.error};
+
 
         default:
             return state;

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Typography} from "@mui/material";
 
-import {clearState, getTracks} from "../../store/actions/musicActions";
+import {clearState, createHistory, getTracks} from "../../store/actions/musicActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
@@ -15,7 +15,8 @@ const Album = ({match}) => {
 
     const artistName = useSelector(state => state.music.artistName);
     const albumTitle = useSelector(state => state.music.albumTitle);
-    const loading = useSelector(state => state.music.loading);
+    const loading = useSelector(state => state.music.tracksLoading);
+    const createHistoryLoading = useSelector(state => state.music.tracksHistoryLoading);
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));
@@ -28,6 +29,14 @@ const Album = ({match}) => {
     if (!user) {
         return <Redirect to='/login'/>
     }
+
+    const playMusicHandler = id => {
+        const data = {
+          track: id
+        };
+
+        dispatch(createHistory(data));
+    };
 
     return (
         <>
@@ -58,6 +67,8 @@ const Album = ({match}) => {
                         number={track.number}
                         title={track.title}
                         duration={track.duration}
+                        playHandler={() => playMusicHandler(track['_id'])}
+                        isDisabled={createHistoryLoading}
                     />
                 )) : <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
             </Box>

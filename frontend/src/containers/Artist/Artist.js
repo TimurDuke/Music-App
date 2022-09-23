@@ -12,7 +12,7 @@ const Artist = ({match}) => {
 
     const albums = useSelector(state => state.music.albums);
     const artistName = useSelector(state => state.music.artistName);
-    const loading = useSelector(state => state.music.loading);
+    const loading = useSelector(state => state.music.albumsLoading);
 
     useEffect(() => {
         dispatch(getAlbums(match.params.id));

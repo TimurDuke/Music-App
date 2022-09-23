@@ -118,3 +118,33 @@ export const getHistory = () => {
         }
     };
 };
+
+export const CREATE_HISTORY_REQUEST = 'CREATE_HISTORY_REQUEST'
+export const CREATE_HISTORY_SUCCESS = 'CREATE_HISTORY_SUCCESS'
+export const CREATE_HISTORY_FAILURE = 'CREATE_HISTORY_FAILURE'
+
+const createHistoryRequest = () => ({type: CREATE_HISTORY_REQUEST});
+const createHistorySuccess= () => ({type: CREATE_HISTORY_SUCCESS});
+const createHistoryFailure = error => ({type: CREATE_HISTORY_FAILURE, error});
+
+export const createHistory = data => {
+    return async (dispatch, getState) => {
+        try {
+            const headers = {
+                'Authorization': getState().users.user && getState().users.user.token,
+            };
+
+            dispatch(createHistoryRequest());
+
+            await axiosApi.post('/track_history', data, {headers});
+
+            dispatch(createHistorySuccess());
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(createHistoryFailure(e.response.data));
+            } else {
+                dispatch(createHistoryFailure({global: 'No internet'}));
+            }
+        }
+    };
+};
