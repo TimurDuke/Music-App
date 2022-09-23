@@ -4,16 +4,17 @@ import {Route, Switch} from "react-router-dom";
 import Artists from "./containers/Artists/Artists";
 import Artist from "./containers/Artist/Artist";
 import Album from "./containers/Album/Album";
+import Register from "./containers/Register/Register";
 
 const App = () => (
     <Layout>
         <Switch>
             <Route path='/' exact component={Artists}/>
+            <Route path='/register' component={Register}/>
             <Route path='/artist/:artist/:id' component={Artist}/>
             <Route path='/album/:artist/:album/:id' component={Album}/>
-            {/*<Route path='/register' component={Register}/>*/}
             {/*<Route path='/login' component={Login}/>*/}
-            <Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>
+            {/*<Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>*/}
         </Switch>
     </Layout>
 );
