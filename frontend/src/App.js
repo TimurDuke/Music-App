@@ -11,6 +11,9 @@ const App = () => (
             <Route path='/' exact component={Artists}/>
             <Route path='/artist/:artist/:id' component={Artist}/>
             <Route path='/album/:artist/:album/:id' component={Album}/>
+            {/*<Route path='/register' component={Register}/>*/}
+            {/*<Route path='/login' component={Login}/>*/}
+            <Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>
         </Switch>
     </Layout>
 );
