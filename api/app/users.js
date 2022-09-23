@@ -30,19 +30,19 @@ router.post('/sessions', async (req, res) => {
     const user = await User.findOne({username});
 
     if (!user) {
-        return res.status(401).send({error: "Username or password is wrong"});
+        return res.status(401).send({message: "Username or password is wrong"});
     }
 
     const isMatch = await user.checkPassword(password);
 
     if (!isMatch) {
-        return res.status(401).send({error: "Username or password is wrong"});
+        return res.status(401).send({message: "Username or password is wrong"});
     }
 
-    const token = user.generateToken();
-    await user.save();
+    user.generateToken();
+    await user.save({validateBeforeSave: false});
 
-    res.send({token});
+    res.send(user);
 });
 
 module.exports = router;
