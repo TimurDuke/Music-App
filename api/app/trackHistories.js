@@ -1,24 +1,31 @@
 const express = require('express');
 const TrackHistory = require('../models/TrackHistory');
-const User = require('../models/User');
 const Track = require('../models/Track');
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
+    const user = req.user;
+
+    try {
+        const history = await TrackHistory
+            .find({user: user['_id']})
+            .sort({datetime: -1})
+            .populate({path: "track", select: "title",
+                populate: {path: "album", select: "_id",
+                    populate: {path: "artist", select: "name"}}});
+
+        res.send(history)
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
+router.post('/', auth, async (req, res) => {
     const { track } = req.body;
 
-    const token = req.get('Authorization');
-
-    if (!token) {
-        return res.status(401).send({error: "No token presented"});
-    }
-
-    const user = await User.findOne({token});
-
-    if (!user) {
-        return res.status(401).send({error: "Token is wrong"});
-    }
+    const user = req.user;
 
     try {
         const listenedTrack = await Track.findById({_id: track});
