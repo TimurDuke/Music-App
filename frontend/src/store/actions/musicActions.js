@@ -93,3 +93,28 @@ export const getTracks = albumId => {
     };
 };
 
+export const GET_HISTORY_REQUEST = 'GET_HISTORY_REQUEST';
+export const GET_HISTORY_SUCCESS = 'GET_HISTORY_SUCCESS';
+export const GET_HISTORY_FAILURE = 'GET_HISTORY_FAILURE';
+
+const getHistoryRequest = () => ({type: GET_HISTORY_REQUEST});
+const getHistorySuccess = history => ({type: GET_HISTORY_SUCCESS, history});
+const getHistoryFailure = error => ({type: GET_HISTORY_FAILURE, error});
+
+export const getHistory = () => {
+    return async (dispatch, getState) => {
+        try {
+            const headers = {
+                'Authorization': getState().users.user && getState().users.user.token,
+            };
+            dispatch(getHistoryRequest());
+            const {data} = await axiosApi.get('/track_history', {headers});
+
+            if (data) {
+                dispatch(getHistorySuccess(data));
+            }
+        } catch (e) {
+            dispatch(getHistoryFailure(e));
+        }
+    };
+};

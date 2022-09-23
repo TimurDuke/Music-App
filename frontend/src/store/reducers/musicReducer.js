@@ -5,7 +5,7 @@ import {
     GET_ALBUMS_SUCCESS,
     GET_ARTISTS_FAILURE,
     GET_ARTISTS_REQUEST,
-    GET_ARTISTS_SUCCESS,
+    GET_ARTISTS_SUCCESS, GET_HISTORY_FAILURE, GET_HISTORY_REQUEST, GET_HISTORY_SUCCESS,
     GET_TRACKS_FAILURE,
     GET_TRACKS_REQUEST,
     GET_TRACKS_SUCCESS
@@ -25,6 +25,7 @@ const initialState = {
     artistsError: null,
     albumsError: null,
     tracksError: null,
+    tracksHistoryError: null,
 };
 
 const musicReducer = (state = initialState, actions) => {
@@ -65,6 +66,13 @@ const musicReducer = (state = initialState, actions) => {
             };
         case GET_TRACKS_FAILURE:
             return {...state, tracksLoading: false, tracksError: actions.error};
+
+        case GET_HISTORY_REQUEST:
+            return {...state, tracksHistoryLoading: true, tracksHistoryError: null};
+        case GET_HISTORY_SUCCESS:
+            return {...state, tracksHistoryLoading: false, tracksHistoryError: null, tracksHistory: actions.history};
+        case GET_HISTORY_FAILURE:
+            return {...state, tracksHistoryLoading: false, tracksHistoryError: actions.error};
 
         default:
             return state;

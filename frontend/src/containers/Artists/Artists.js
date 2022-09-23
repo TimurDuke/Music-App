@@ -10,8 +10,8 @@ import Preloader from "../../components/UI/Preloader/Preloader";
 const Artists = () => {
     const dispatch = useDispatch();
 
-    const artists = useSelector(state => state.artists.artists);
-    const loading = useSelector(state => state.artists.loading);
+    const artists = useSelector(state => state.music.artists);
+    const loading = useSelector(state => state.music.loading);
 
     useEffect(() => {
         dispatch(getArtists());

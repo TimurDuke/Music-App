@@ -6,6 +6,7 @@ import Artist from "./containers/Artist/Artist";
 import Album from "./containers/Album/Album";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
+import TrackHistory from "./containers/TrackHistory/TrackHistory";
 
 const App = () => (
     <Layout>
@@ -13,9 +14,10 @@ const App = () => (
             <Route path='/' exact component={Artists}/>
             <Route path='/register' component={Register}/>
             <Route path='/login' component={Login}/>
+            <Route path='/track_history' component={TrackHistory}/>
             <Route path='/artist/:artist/:id' component={Artist}/>
             <Route path='/album/:artist/:album/:id' component={Album}/>
-            {/*<Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>*/}
+            <Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>
         </Switch>
     </Layout>
 );
