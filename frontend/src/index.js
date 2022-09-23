@@ -8,6 +8,7 @@ import {Router} from "react-router-dom";
 import history from "./history";
 import musicReducer from "./store/reducers/musicReducer";
 import usersReducer from "./store/reducers/usersReducer";
+import tracksHistoryReducer from "./store/reducers/tracksHistoryReducer";
 import App from './App';
 import './index.css';
 
@@ -16,6 +17,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
     music: musicReducer,
     users: usersReducer,
+    tracksHistory: tracksHistoryReducer,
 });
 
 const store = createStore(
