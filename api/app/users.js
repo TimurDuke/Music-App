@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 
         res.send(user);
     } catch (e) {
-        res.status(400).send({error: e.message});
+        res.status(400).send(e);
     }
 });
 
