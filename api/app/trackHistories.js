@@ -38,33 +38,17 @@ router.post('/', auth, async (req, res) => {
             return res.status(400).send({error: "Track not found"});
         }
 
-        await TrackHistory.find({user: user['_id']}).exec(async (err, histories) => {
-            if (err) throw new Error();
+        const trackHistoryData = {
+            track: listenedTrack['_id'],
+            user: user['_id'],
+            datetime: new Date().toLocaleString()
+        };
 
-            const tracks = histories.filter(history => history['track'].toString() === track);
+        const trackHistory = new TrackHistory(trackHistoryData);
 
-            const trackHistoryData = {
-                track: listenedTrack['_id'],
-                user: user['_id'],
-                datetime: new Date().toLocaleString()
-            };
+        await trackHistory.save();
 
-            if (!tracks.length) {
-                const trackHistory = new TrackHistory(trackHistoryData);
-
-                await trackHistory.save();
-
-                return res.send(trackHistory);
-            }
-
-            const updatedTrackHistory = await TrackHistory.findOneAndUpdate(
-                {user: user['_id']},
-                trackHistoryData,
-                {new: true}
-            );
-
-            res.send(updatedTrackHistory);
-        });
+        res.send(trackHistory);
     } catch (e) {
         res.status(400).send({error: e.message});
     }
