@@ -2,6 +2,9 @@ import React from 'react';
 import {AppBar, Container, Grid, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
+
 import UserMenu from "./Menu/UserMenu";
 import Anonymous from "./Menu/Anonymous";
 
@@ -11,6 +14,7 @@ const Layout = ({children}) => {
     return (
         <>
             <AppBar sx={{padding: '10px 15px'}}>
+                <ToastContainer/>
                 <Grid container justifyContent='space-between' alignItems='center'>
                     <Grid item>
                         <Typography

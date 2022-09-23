@@ -1,4 +1,5 @@
 import axiosApi from "../../axiosApi";
+import {toast} from "react-toastify";
 
 export const CLEAR_STATE = 'CLEAR_STATE';
 
@@ -58,15 +59,30 @@ const getTracksSuccess = tracks => ({type: GET_TRACKS_SUCCESS, tracks});
 const getTracksFailure = error => ({type: GET_TRACKS_FAILURE, error});
 
 export const getTracks = albumId => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try {
+            const headers = {
+                'Authorization': getState().users.user && getState().users.user.token,
+            };
+
             dispatch(getTracksRequest());
 
-            const {data} = await axiosApi.get('/tracks?album=' + albumId);
+            const {data} = await axiosApi.get('/tracks?album=' + albumId, {headers});
             if (data) {
                 dispatch(getTracksSuccess(data));
             }
         } catch (e) {
+            if (e.response.status === 401) {
+                toast.warn('You need login!', {
+                    position: "top-right",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
             dispatch(getTracksFailure(e));
         }
     };
