@@ -12,9 +12,13 @@ router.get('/', auth, async (req, res) => {
         const history = await TrackHistory
             .find({user: user['_id']})
             .sort({datetime: -1})
-            .populate({path: "track", select: "title",
-                populate: {path: "album", select: "_id",
-                    populate: {path: "artist", select: "name"}}});
+            .populate({
+                path: "track", select: "title",
+                populate: {
+                    path: "album", select: "_id",
+                    populate: {path: "artist", select: "name"}
+                }
+            });
 
         res.send(history)
     } catch (e) {
@@ -34,17 +38,33 @@ router.post('/', auth, async (req, res) => {
             return res.status(400).send({error: "Track not found"});
         }
 
-        const trackHistoryData = {
-            track: listenedTrack['_id'],
-            user: user['_id'],
-            datetime: new Date().toLocaleDateString()
-        };
+        await TrackHistory.find({user: user['_id']}).exec(async (err, histories) => {
+            if (err) throw new Error();
 
-        const trackHistory = new TrackHistory(trackHistoryData);
+            const tracks = histories.filter(history => history['track'].toString() === track);
 
-        await trackHistory.save();
+            const trackHistoryData = {
+                track: listenedTrack['_id'],
+                user: user['_id'],
+                datetime: new Date().toLocaleString()
+            };
 
-        res.send(trackHistory);
+            if (!tracks.length) {
+                const trackHistory = new TrackHistory(trackHistoryData);
+
+                await trackHistory.save();
+
+                return res.send(trackHistory);
+            }
+
+            const updatedTrackHistory = await TrackHistory.findOneAndUpdate(
+                {user: user['_id']},
+                trackHistoryData,
+                {new: true}
+            );
+
+            res.send(updatedTrackHistory);
+        });
     } catch (e) {
         res.status(400).send({error: e.message});
     }
