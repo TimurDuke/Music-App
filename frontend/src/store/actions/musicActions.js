@@ -72,18 +72,24 @@ export const getTracks = albumId => {
                 dispatch(getTracksSuccess(data));
             }
         } catch (e) {
-            if (e.response.status === 401) {
-                toast.warn('You need login!', {
-                    position: "top-right",
-                    autoClose: 3500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+            if (e.response) {
+                if (e.response.status === 401) {
+                    toast.warn('You need login!', {
+                        position: "top-right",
+                        autoClose: 3500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+
+                dispatch(getTracksFailure(e.response.data));
+            } else {
+                dispatch(getTracksFailure({global: 'No internet'}));
             }
-            dispatch(getTracksFailure(e));
         }
     };
 };
+

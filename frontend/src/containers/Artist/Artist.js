@@ -3,16 +3,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {Grid, Typography} from "@mui/material";
 
 import {apiUrl} from "../../config";
-import {clearState, getAlbums} from "../../store/actions/artistsActions";
+import {clearState, getAlbums} from "../../store/actions/musicActions";
 import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 
 const Artist = ({match}) => {
     const dispatch = useDispatch();
 
-    const albums = useSelector(state => state.artists.albums);
-    const artistName = useSelector(state => state.artists.artistName);
-    const loading = useSelector(state => state.artists.loading);
+    const albums = useSelector(state => state.music.albums);
+    const artistName = useSelector(state => state.music.artistName);
+    const loading = useSelector(state => state.music.loading);
 
     useEffect(() => {
         dispatch(getAlbums(match.params.id));

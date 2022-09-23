@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Typography} from "@mui/material";
 
-import {clearState, getTracks} from "../../store/actions/artistsActions";
+import {clearState, getTracks} from "../../store/actions/musicActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
@@ -10,12 +10,12 @@ import {Redirect} from "react-router-dom";
 const Album = ({match}) => {
     const dispatch = useDispatch();
 
-    const tracks = useSelector(state => state.artists.tracks);
+    const tracks = useSelector(state => state.music.tracks);
     const user = useSelector(state => state.users.user);
 
-    const artistName = useSelector(state => state.artists.artistName);
-    const albumTitle = useSelector(state => state.artists.albumTitle);
-    const loading = useSelector(state => state.artists.loading);
+    const artistName = useSelector(state => state.music.artistName);
+    const albumTitle = useSelector(state => state.music.albumTitle);
+    const loading = useSelector(state => state.music.loading);
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));

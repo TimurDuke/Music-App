@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Grid} from "@mui/material";
 
 import {apiUrl} from "../../config";
-import {getArtists} from "../../store/actions/artistsActions";
+import {getArtists} from "../../store/actions/musicActions";
 import ArtistItem from "../../components/ArtistItem/ArtistItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 

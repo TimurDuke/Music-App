@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 
 import history from "./history";
-import artistsReducer from "./store/reducers/artistsReducer";
+import musicReducer from "./store/reducers/musicReducer";
 import usersReducer from "./store/reducers/usersReducer";
 import App from './App';
 import './index.css';
@@ -14,7 +14,7 @@ import './index.css';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-    artists: artistsReducer,
+    music: musicReducer,
     users: usersReducer,
 });
 

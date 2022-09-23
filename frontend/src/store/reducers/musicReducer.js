@@ -9,62 +9,66 @@ import {
     GET_TRACKS_FAILURE,
     GET_TRACKS_REQUEST,
     GET_TRACKS_SUCCESS
-} from "../actions/artistsActions";
+} from "../actions/musicActions";
 
 const initialState = {
     artists: [],
     albums: [],
     tracks: [],
+    tracksHistory: [],
     artistName: '',
     albumTitle: '',
-    loading: false,
+    artistsLoading: false,
+    albumsLoading: false,
+    tracksLoading: false,
+    tracksHistoryLoading: false,
     artistsError: null,
     albumsError: null,
     tracksError: null,
 };
 
-const artistsReducer = (state = initialState, actions) => {
+const musicReducer = (state = initialState, actions) => {
     switch (actions.type) {
         case CLEAR_STATE:
             return initialState;
 
         case GET_ARTISTS_REQUEST:
-            return {...state, loading: true, artistsError: null};
+            return {...state, artistsLoading: true, artistsError: null};
         case GET_ARTISTS_SUCCESS:
-            return {...state, loading: false, artistsError: null, artists: actions.artists};
+            return {...state, artistsLoading: false, artistsError: null, artists: actions.artists};
         case GET_ARTISTS_FAILURE:
-            return {...state, loading: false, artistsError: actions.error};
+            return {...state, artistsLoading: false, artistsError: actions.error};
 
         case GET_ALBUMS_REQUEST:
-            return {...state, loading: true, albumsError: null};
+            return {...state, albumsLoading: true, albumsError: null};
         case GET_ALBUMS_SUCCESS:
             return {
                 ...state,
-                loading: false,
+                tracksLoading: false,
                 albumsError: null,
                 albums: actions.albums,
                 artistName: actions.albums[0].artist.name,
             };
         case GET_ALBUMS_FAILURE:
-            return {...state, loading: false, albumsError: actions.error};
+            return {...state, albumsLoading: false, albumsError: actions.error};
 
         case GET_TRACKS_REQUEST:
-            return {...state, loading: true, tracksError: null};
+            return {...state, tracksLoading: true, tracksError: null};
         case GET_TRACKS_SUCCESS:
             return {
                 ...state,
-                loading: false,
+                tracksLoading: false,
                 tracksError: null,
                 tracks: actions.tracks,
                 albumTitle: actions.tracks[0].album.title,
                 artistName: actions.tracks[0].album.artist.name,
             };
         case GET_TRACKS_FAILURE:
-            return {...state, loading: false, tracksError: actions.error};
+            return {...state, tracksLoading: false, tracksError: actions.error};
 
         default:
             return state;
     }
 };
 
-export default artistsReducer;
+export default musicReducer;
