@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client';
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
 import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
 
+import history from "./history";
 import artistsReducer from "./store/reducers/artistsReducer";
+import usersReducer from "./store/reducers/usersReducer";
 import App from './App';
 import './index.css';
 
@@ -13,6 +15,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     artists: artistsReducer,
+    users: usersReducer,
 });
 
 const store = createStore(
@@ -21,11 +24,11 @@ const store = createStore(
 );
 
 const app = (
-    <BrowserRouter>
-        <Provider store={store}>
+    <Provider store={store}>
+        <Router history={history}>
             <App/>
-        </Provider>
-    </BrowserRouter>
+        </Router>
+    </Provider>
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
