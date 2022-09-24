@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {clearLoginErrors, loginUser} from "../../store/actions/usersActions";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
+import {clearHistoryState} from "../../store/actions/tracksHistoryActions";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -48,6 +49,7 @@ const Login = () => {
     useEffect(() => {
         return () => {
             dispatch(clearLoginErrors());
+            dispatch(clearHistoryState());
         }
     }, [dispatch]);
 

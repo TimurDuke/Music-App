@@ -1,11 +1,12 @@
 import {
+    CLEAR_HISTORY_STATE,
     CREATE_HISTORY_FAILURE,
     CREATE_HISTORY_REQUEST,
     CREATE_HISTORY_SUCCESS,
     GET_HISTORY_FAILURE,
     GET_HISTORY_REQUEST,
     GET_HISTORY_SUCCESS
-} from "../actions/musicActions";
+} from "../actions/tracksHistoryActions";
 
 const initialState = {
     history: [],
@@ -15,6 +16,9 @@ const initialState = {
 
 const tracksHistoryReducer = (state = initialState, actions) => {
     switch (actions.type) {
+        case CLEAR_HISTORY_STATE:
+            return initialState;
+
         case GET_HISTORY_REQUEST:
             return {...state, historyLoading: true, historyError: null};
         case GET_HISTORY_SUCCESS:

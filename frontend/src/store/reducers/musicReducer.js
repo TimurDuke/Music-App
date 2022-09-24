@@ -1,5 +1,5 @@
 import {
-    CLEAR_STATE,
+    CLEAR_MUSIC_STATE,
     GET_ALBUMS_FAILURE,
     GET_ALBUMS_REQUEST,
     GET_ALBUMS_SUCCESS,
@@ -27,8 +27,8 @@ const initialState = {
 
 const musicReducer = (state = initialState, actions) => {
     switch (actions.type) {
-        case CLEAR_STATE:
-            return initialState;
+        case CLEAR_MUSIC_STATE:
+            return {...state, artistName: '', albumTitle: ''};
 
         case GET_ARTISTS_REQUEST:
             return {...state, artistsLoading: true, artistsError: null};

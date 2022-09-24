@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Grid, Typography} from "@mui/material";
 
 import {apiUrl} from "../../config";
-import {clearState, getAlbums} from "../../store/actions/musicActions";
+import {clearMusicState, getAlbums} from "../../store/actions/musicActions";
 import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 
@@ -18,7 +18,7 @@ const Artist = ({match}) => {
         dispatch(getAlbums(match.params.id));
 
         return () => {
-            dispatch(clearState());
+            dispatch(clearMusicState());
         };
     }, [dispatch, match.params.id]);
 

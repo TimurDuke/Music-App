@@ -3,9 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {Box, List} from "@mui/material";
 import {Redirect} from "react-router-dom";
 
-import {getHistory} from "../../store/actions/musicActions";
 import HistoryItem from "../../components/HistoryItem/HistoryItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
+import {getHistory} from "../../store/actions/tracksHistoryActions";
 
 const TrackHistory = () => {
     const dispatch = useDispatch();
