@@ -20,7 +20,8 @@ const TrackSchema = new Schema({
     number: {
         type: Number,
         required: true,
-    }
+    },
+    youtube: String,
 });
 
 TrackSchema.plugin(idValidator, {error: 'Bad ID value for album'});

@@ -52,13 +52,13 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { title, album, duration, number } = req.body;
+    const { title, album, duration, number, youtube } = req.body;
 
     if (!title || !album || !duration || !number) {
         return res.status(400).send({error: 'Data not valid'});
     }
 
-    const trackData = {title, album, duration, number};
+    const trackData = {title, album, duration, number, youtube};
 
     const track = new Track(trackData);
 
