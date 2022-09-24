@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getHistory} from "../../store/actions/musicActions";
 import {Box, List} from "@mui/material";
-import HistoryItem from "../../components/HistoryItem/HistoryItem";
 import {Redirect} from "react-router-dom";
+
+import {getHistory} from "../../store/actions/musicActions";
+import HistoryItem from "../../components/HistoryItem/HistoryItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 
 const TrackHistory = () => {

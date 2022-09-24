@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {Box, Button, Card, CardActions, CardHeader, CardMedia, Grid} from "@mui/material";
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 
 const ArtistItem = ({name, image, id}) => (
     <Grid item xs={12} sm={4} lg={3}>
@@ -40,7 +41,8 @@ const ArtistItem = ({name, image, id}) => (
                     component={Link}
                     to={`/artist/${name}/${id}`}
                 >
-                    Подробнее
+                    More
+                    <ArrowForwardIosSharpIcon fontSize='50px'/>
                 </Button>
             </CardActions>
         </Card>

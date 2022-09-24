@@ -6,6 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link} from "react-router-dom";
 import {Box} from "@mui/material";
 import {useDispatch} from "react-redux";
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+
 import {logoutUser} from "../../../../store/actions/usersActions";
 
 const UserMenu = ({user}) => {
@@ -37,11 +39,12 @@ const UserMenu = ({user}) => {
             >
                 <Button
                     color='inherit'
+                    sx={{marginRight: "20px"}}
                     variant='outlined'
                     component={Link}
                     to='/track_history'
                 >
-                    Track History
+                    Tracks History
                 </Button>
                 <Button
                     id="basic-button"
@@ -52,6 +55,7 @@ const UserMenu = ({user}) => {
                     onClick={handleClick}
                 >
                     Hello, {user.username}!
+                    <VerifiedUserIcon sx={{marginLeft: '5px'}}/>
                 </Button>
             </Box>
             <Menu

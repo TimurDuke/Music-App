@@ -67,6 +67,7 @@ const Album = ({match}) => {
                         number={track.number}
                         title={track.title}
                         duration={track.duration}
+                        video={track.youtube}
                         playHandler={() => playMusicHandler(track['_id'])}
                         isDisabled={createHistoryLoading}
                     />
