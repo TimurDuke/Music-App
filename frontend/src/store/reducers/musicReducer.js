@@ -28,7 +28,7 @@ const initialState = {
 const musicReducer = (state = initialState, actions) => {
     switch (actions.type) {
         case CLEAR_MUSIC_STATE:
-            return {...state, artistName: '', albumTitle: ''};
+            return initialState;
 
         case GET_ARTISTS_REQUEST:
             return {...state, artistsLoading: true, artistsError: null};
