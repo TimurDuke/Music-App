@@ -1,5 +1,17 @@
 import {toast} from "react-toastify";
 
+export const useToastError = message => {
+    return toast.error(message, {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+};
+
 export const useToastWarn = message => {
     return toast.warn(message, {
         position: "top-right",

@@ -1,5 +1,5 @@
 import axiosApi from "../../axiosApi";
-import {useHeadersAuth, useToastWarn} from "../../hooks";
+import {useHeadersAuth, useToastError, useToastWarn} from "../../hooks";
 
 export const CLEAR_MUSIC_STATE = 'CLEAR_MUSIC_STATE';
 
@@ -71,6 +71,8 @@ export const getTracks = albumId => {
             }
         } catch (e) {
             if (e.response) {
+                useToastError(e.response.data.error);
+
                 if (e.response.status === 401) {
                     useToastWarn('You need to login!');
                 }

@@ -1,5 +1,5 @@
 import axiosApi from "../../axiosApi";
-import {useHeadersAuth, useToastInfo} from "../../hooks";
+import {useHeadersAuth, useToastError, useToastInfo, useToastWarn} from "../../hooks";
 
 export const CLEAR_HISTORY_STATE = 'CLEAR_HISTORY_STATE';
 export const clearHistoryState = () => ({type: CLEAR_HISTORY_STATE});
@@ -24,7 +24,17 @@ export const getHistory = () => {
                 dispatch(getHistorySuccess(data));
             }
         } catch (e) {
-            dispatch(getHistoryFailure(e));
+            if (e.response) {
+                useToastError(e.response.data.error);
+
+                if (e.response.status === 401) {
+                    useToastWarn('You need to login!');
+                }
+
+                dispatch(getHistoryFailure(e.response.data));
+            } else {
+                dispatch(getHistoryFailure({global: 'No internet'}));
+            }
         }
     };
 };
