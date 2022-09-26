@@ -1,4 +1,5 @@
 import axiosApi from "../../axiosApi";
+import {useHeadersAuth, useToastInfo} from "../../hooks";
 
 export const CLEAR_HISTORY_STATE = 'CLEAR_HISTORY_STATE';
 export const clearHistoryState = () => ({type: CLEAR_HISTORY_STATE});
@@ -14,9 +15,8 @@ const getHistoryFailure = error => ({type: GET_HISTORY_FAILURE, error});
 export const getHistory = () => {
     return async (dispatch, getState) => {
         try {
-            const headers = {
-                'Authorization': getState().users.user && getState().users.user.token,
-            };
+            const headers = useHeadersAuth(getState());
+
             dispatch(getHistoryRequest());
             const {data} = await axiosApi.get('/track_history', {headers});
 
@@ -37,18 +37,22 @@ const createHistoryRequest = () => ({type: CREATE_HISTORY_REQUEST});
 const createHistorySuccess= () => ({type: CREATE_HISTORY_SUCCESS});
 const createHistoryFailure = error => ({type: CREATE_HISTORY_FAILURE, error});
 
-export const createHistory = data => {
+export const createHistory = (trackId, trackTitle) => {
     return async (dispatch, getState) => {
         try {
-            const headers = {
-                'Authorization': getState().users.user && getState().users.user.token,
-            };
+            const headers = useHeadersAuth(getState());
 
             dispatch(createHistoryRequest());
 
-            await axiosApi.post('/track_history', data, {headers});
+            const response = await axiosApi.post('/track_history', trackId, {headers});
 
-            dispatch(createHistorySuccess());
+            if (response.data) {
+                dispatch(createHistorySuccess());
+            }
+
+            if (response.status === 200) {
+                useToastInfo(`Track ${trackTitle} added to track history!`)
+            }
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(createHistoryFailure(e.response.data));

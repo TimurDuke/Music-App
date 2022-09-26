@@ -1,5 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
+import {useToastSuccess} from "../../hooks";
 
 export const CLEAR_REGISTER_ERRORS = 'CLEAR_REGISTER_ERRORS';
 export const clearRegisterErrors = () => ({type: CLEAR_REGISTER_ERRORS});
@@ -17,11 +18,15 @@ export const registerUser = userData => {
         try {
             dispatch(registerUserRequest());
 
-            const {data} = await axiosApi.post('/users', userData);
+            const response = await axiosApi.post('/users', userData);
 
-            if (data) {
-                dispatch(registerUserSuccess(data));
+            if (response.data) {
+                dispatch(registerUserSuccess(response.data));
                 dispatch(historyPush('/'));
+            }
+
+            if (response.status === 200) {
+                useToastSuccess('You have successfully registered!');
             }
         } catch (e) {
             if (e.response && e.response.data) {
@@ -52,11 +57,15 @@ export const loginUser = userData => {
         try {
             dispatch(loginUserRequest());
 
-            const {data} = await axiosApi.post('/users/sessions', userData);
+            const response = await axiosApi.post('/users/sessions', userData);
 
-            if (data) {
-                dispatch(loginUserSuccess(data));
+            if (response.data) {
+                dispatch(loginUserSuccess(response.data));
                 dispatch(historyPush('/'));
+            }
+
+            if (response.status === 200) {
+                useToastSuccess('You have successfully logged in!');
             }
         } catch (e) {
             if (e.response && e.response.data) {

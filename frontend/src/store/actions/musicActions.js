@@ -1,5 +1,5 @@
 import axiosApi from "../../axiosApi";
-import {toast} from "react-toastify";
+import {useHeadersAuth, useToastWarn} from "../../hooks";
 
 export const CLEAR_MUSIC_STATE = 'CLEAR_MUSIC_STATE';
 
@@ -61,9 +61,7 @@ const getTracksFailure = error => ({type: GET_TRACKS_FAILURE, error});
 export const getTracks = albumId => {
     return async (dispatch, getState) => {
         try {
-            const headers = {
-                'Authorization': getState().users.user && getState().users.user.token,
-            };
+            const headers = useHeadersAuth(getState());
 
             dispatch(getTracksRequest());
 
@@ -74,17 +72,8 @@ export const getTracks = albumId => {
         } catch (e) {
             if (e.response) {
                 if (e.response.status === 401) {
-                    toast.warn('You need login!', {
-                        position: "top-right",
-                        autoClose: 3500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    useToastWarn('You need to login!');
                 }
-
                 dispatch(getTracksFailure(e.response.data));
             } else {
                 dispatch(getTracksFailure({global: 'No internet'}));

@@ -31,12 +31,12 @@ const Album = ({match}) => {
         return <Redirect to='/login'/>
     }
 
-    const playMusicHandler = id => {
-        const data = {
+    const playMusicHandler = (id, title) => {
+        const trackId = {
           track: id
         };
 
-        dispatch(createHistory(data));
+        dispatch(createHistory(trackId, title));
     };
 
     return (
@@ -69,7 +69,7 @@ const Album = ({match}) => {
                         title={track.title}
                         duration={track.duration}
                         video={track.youtube}
-                        playHandler={() => playMusicHandler(track['_id'])}
+                        playHandler={() => playMusicHandler(track['_id'], track.title)}
                         isDisabled={createHistoryLoading}
                     />
                 )) : <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
