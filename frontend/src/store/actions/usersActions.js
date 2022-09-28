@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
-import {useToastSuccess} from "../../hooks";
+import {useHeadersAuth, useToastSuccess} from "../../hooks";
 
 export const CLEAR_REGISTER_ERRORS = 'CLEAR_REGISTER_ERRORS';
 export const clearRegisterErrors = () => ({type: CLEAR_REGISTER_ERRORS});
@@ -39,7 +39,21 @@ export const registerUser = userData => {
 };
 
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const logoutUser = () => ({type: LOGOUT_USER});
+
+export const logoutUser = () => {
+    return async (dispatch, getState) => {
+        try {
+            const headers = useHeadersAuth(getState());
+
+            await axiosApi.delete('users/sessions', {headers});
+
+            dispatch({type: LOGOUT_USER});
+            dispatch(historyPush('/'));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+}
 
 export const CLEAR_LOGIN_ERRORS = 'CLEAR_LOGIN_ERRORS';
 export const clearLoginErrors = () => ({type: CLEAR_LOGIN_ERRORS});

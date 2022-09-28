@@ -24,10 +24,6 @@ const UserMenu = ({user}) => {
         setAnchorEl(null);
     };
 
-    const logoutHandler = () => {
-        dispatch(logoutUser());
-    };
-
     return (
         <div>
             <Box
@@ -69,7 +65,7 @@ const UserMenu = ({user}) => {
             >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
             </Menu>
         </div>
     );
