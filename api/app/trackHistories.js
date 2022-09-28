@@ -41,7 +41,7 @@ router.post('/', auth, async (req, res) => {
         const trackHistoryData = {
             track: listenedTrack['_id'],
             user: user['_id'],
-            datetime: new Date().toLocaleString()
+            datetime: new Date().toISOString()
         };
 
         const trackHistory = new TrackHistory(trackHistoryData);

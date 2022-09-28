@@ -58,6 +58,10 @@ router.post('/', async (req, res) => {
         return res.status(400).send({error: 'Data not valid'});
     }
 
+    const checkNumber = await Track.findOne({number, album});
+
+    if (checkNumber) return res.status(400).send({error: "Track with this number already having"});
+
     const trackData = {title, album, duration, number, youtube};
 
     const track = new Track(trackData);
