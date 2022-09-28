@@ -12,7 +12,7 @@ const AlbumSchema = new Schema({
     },
     artist: {
         type: Schema.Types.ObjectId,
-        ref: "Artist",
+        ref: "Albums",
         required: true,
     },
     release: {
@@ -26,6 +26,6 @@ AlbumSchema.plugin(idValidator, {error: 'Bad ID value for artist'});
 
 AlbumSchema.plugin(uniqueValidator, {error: "An album with that title already exists."});
 
-const Album = model("Album", AlbumSchema);
+const Album = model("Tracks", AlbumSchema);
 
 module.exports = Album;

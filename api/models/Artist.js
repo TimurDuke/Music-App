@@ -15,6 +15,6 @@ const ArtistSchema = new Schema({
 
 ArtistSchema.plugin(uniqueValidator, {error: "An artist with that name already exists."});
 
-const Artist = model("Artist", ArtistSchema);
+const Artist = model("Albums", ArtistSchema);
 
 module.exports = Artist;

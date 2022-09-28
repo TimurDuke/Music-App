@@ -7,7 +7,7 @@ import {clearMusicState, getAlbums} from "../../store/actions/musicActions";
 import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 
-const Artist = ({match}) => {
+const Albums = ({match}) => {
     const dispatch = useDispatch();
 
     const albums = useSelector(state => state.music.albums);
@@ -41,7 +41,7 @@ const Artist = ({match}) => {
                         release={album.release}
                         tracksCount={album.tracksCount}
                         artistName={album.artist.name}
-                        image={album.image ? apiUrl + '/uploads/' + album.image : null}
+                        image={album.image ? apiUrl + '/' + album.image : null}
                     />
                 ))}
             </Grid> : <h2 style={{textAlign: 'center'}}>This artist has no albums.</h2>}
@@ -49,4 +49,4 @@ const Artist = ({match}) => {
     );
 };
 
-export default Artist;
+export default Albums;

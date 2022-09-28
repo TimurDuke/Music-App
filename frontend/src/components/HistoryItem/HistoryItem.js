@@ -4,7 +4,7 @@ import {ListItemButton, ListItemText} from "@mui/material";
 const HistoryItem = ({artistName, trackName, datetime}) => {
     const date = <span>
                     <span style={{fontSize: '14px', marginRight: '10px', color: '#ccc'}}>Datetime</span>
-                    {datetime}
+                    {new Date(datetime).toLocaleString()}
                 </span>
 
     return (

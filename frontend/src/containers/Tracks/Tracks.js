@@ -8,7 +8,7 @@ import Preloader from "../../components/UI/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
 import {createHistory} from "../../store/actions/tracksHistoryActions";
 
-const Album = ({match}) => {
+const Tracks = ({match}) => {
     const dispatch = useDispatch();
 
     const tracks = useSelector(state => state.music.tracks);
@@ -78,4 +78,4 @@ const Album = ({match}) => {
     );
 };
 
-export default Album;
+export default Tracks;

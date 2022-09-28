@@ -72,16 +72,16 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-    const { title, release, artist } = req.body;
+    const { title, artist } = req.body;
 
-    if (!title || !release || !artist) {
+    if (!title || !artist) {
         return res.status(400).send({error: 'Data not valid'});
     }
 
-    const albumData = {title, release, artist, image: null};
+    const albumData = {title, release: new Date().toISOString(), artist, image: null};
 
     if (req.file) {
-        albumData.image = req.file.filename;
+        albumData.image = 'uploads/' + req.file.filename;
     }
 
     const album = new Album(albumData);
