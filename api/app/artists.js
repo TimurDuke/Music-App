@@ -3,10 +3,10 @@ const multer = require('multer');
 const uniqid = require("uniqid");
 const path = require('path');
 
-const Artist = require('../models/Artist');
 const config = require('../config');
 const auth = require("../middleware/auth");
 const permit = require("../middleware/permit");
+const Artist = require('../models/Artist');
 
 const router = express.Router();
 

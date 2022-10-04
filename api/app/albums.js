@@ -3,11 +3,11 @@ const multer = require('multer');
 const uniqid = require("uniqid");
 const path = require('path');
 
-const Album = require('../models/Album');
 const config = require('../config');
-const Track = require("../models/Track");
 const auth = require("../middleware/auth");
 const permit = require("../middleware/permit");
+const Album = require('../models/Album');
+const Track = require("../models/Track");
 
 const router = express.Router();
 
