@@ -6,6 +6,8 @@ const path = require('path');
 const Album = require('../models/Album');
 const config = require('../config');
 const Track = require("../models/Track");
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 
 const router = express.Router();
 
@@ -92,6 +94,22 @@ router.post('/', upload.single('image'), async (req, res) => {
         res.send(album);
     } catch (e) {
         res.status(400).send({error: e.message});
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    try {
+        const album = await Album.findById(req.params.id);
+
+        if (!album) {
+            return res.status(404).send({message: 'Album not found!'});
+        }
+
+        await Album.findByIdAndDelete(album['_id']);
+
+        res.send({message: "Album deleted."});
+    } catch (e) {
+        res.sendStatus(500);
     }
 });
 

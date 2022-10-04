@@ -1,8 +1,8 @@
 const express = require('express');
 
 const Track = require('../models/Track');
-const Album = require('../models/Album');
 const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 
 const router = express.Router();
 
@@ -22,17 +22,9 @@ router.get('/', auth, async (req, res) => {
         }
     } else if (artist) {
         try {
-            await Album.find({artist}).exec(async (err, albums) => {
-                if (err) throw new Error();
+            const tracks = await Track.find({artist});
 
-                if (!albums.length) {
-                    return res.status(404).send({error: "No tracks found for this artist."});
-                }
-
-                const tracks = await Track.find({album: {$in: albums}});
-
-                res.send(tracks);
-            });
+            res.send(tracks);
         } catch (e) {
             res.sendStatus(500);
         }
@@ -72,6 +64,22 @@ router.post('/', async (req, res) => {
         res.send(track);
     } catch (e) {
         res.status(400).send(e.message);
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    try {
+        const track = await Track.findById(req.params.id);
+
+        if (!track) {
+            return res.status(404).send({message: 'Track not found!'});
+        }
+
+        await Track.findByIdAndDelete(track['_id']);
+
+        res.send({message: "Track deleted."});
+    } catch (e) {
+        res.sendStatus(500);
     }
 });
 

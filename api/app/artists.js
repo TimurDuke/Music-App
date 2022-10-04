@@ -5,6 +5,8 @@ const path = require('path');
 
 const Artist = require('../models/Artist');
 const config = require('../config');
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 
 const router = express.Router();
 
@@ -54,6 +56,22 @@ router.post('/', upload.single('image'), async (req, res) => {
         res.send(artist);
     } catch (e) {
         res.status(400).send({error: e.message});
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    try {
+        const artist = await Artist.findById(req.params.id);
+
+        if (!artist) {
+            return res.status(404).send({message: 'Artist not found!'});
+        }
+
+        await Artist.findByIdAndDelete(artist['_id']);
+
+        res.send({message: "Artist deleted."});
+    } catch (e) {
+        res.sendStatus(500);
     }
 });
 
