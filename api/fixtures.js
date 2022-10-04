@@ -41,7 +41,7 @@ const run = async () => {
         published: true,
     });
 
-    const [albumTimur, albumSerkhan1, albumSerkhan2] = await Album.create({
+    const [albumTimur, albumSerkhan1] = await Album.create({
         title: "Tracks 1 by Timur",
         artist: artist1['_id'],
         release: "2022-09-28T09:43:14.374Z",
@@ -73,7 +73,7 @@ const run = async () => {
         album: albumTimur['_id'],
         duration: "3:25",
         number: 2,
-        published: true,
+        published: false,
     }, {
         title: "Track Serkhan 1",
         artist: artist2['_id'],
@@ -88,13 +88,6 @@ const run = async () => {
         album: albumSerkhan1['_id'],
         duration: "4:15",
         number: 2,
-        published: true,
-    }, {
-        title: "Track Serkhan 1",
-        artist: artist2['_id'],
-        album: albumSerkhan2['_id'],
-        duration: "2:21",
-        number: 1,
         published: false,
     });
 
