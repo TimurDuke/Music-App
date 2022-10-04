@@ -9,7 +9,6 @@ import {clearLoginErrors, loginUser} from "../../store/actions/usersActions";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 import {clearHistoryState} from "../../store/actions/tracksHistoryActions";
-import {clearMusicState} from "../../store/actions/musicActions";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -51,7 +50,6 @@ const Login = () => {
         return () => {
             dispatch(clearLoginErrors());
             dispatch(clearHistoryState());
-            dispatch(clearMusicState());
         }
     }, [dispatch]);
 
