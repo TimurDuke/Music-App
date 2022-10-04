@@ -8,9 +8,14 @@ const TrackSchema = new Schema({
         type: String,
         required: true,
     },
+    artist: {
+        type: Schema.Types.ObjectId,
+        ref: "Artist",
+        required: true,
+    },
     album: {
         type: Schema.Types.ObjectId,
-        ref: "Tracks",
+        ref: "Album",
         required: true,
     },
     duration: {
@@ -20,6 +25,11 @@ const TrackSchema = new Schema({
     number: {
         type: Number,
         required: true,
+    },
+    published: {
+        type: Boolean,
+        required: true,
+        default: false,
     },
     youtube: String,
 });
