@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Grid} from "@mui/material";
 import {Redirect} from "react-router-dom";
 
-import HistoryItem from "../../components/HistoryItem/HistoryItem";
+import HistoryItem from "../../components/Items/HistoryItem/HistoryItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {getHistory} from "../../store/actions/tracksHistoryActions";
 

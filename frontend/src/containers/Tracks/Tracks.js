@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Typography} from "@mui/material";
 
-import TrackItem from "../../components/TrackItem/TrackItem";
+import TrackItem from "../../components/Items/TrackItem/TrackItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
 import {createHistory} from "../../store/actions/tracksHistoryActions";

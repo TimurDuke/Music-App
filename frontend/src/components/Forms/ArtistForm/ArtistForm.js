@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Button, Grid} from "@mui/material";
-import FileInput from "../UI/Form/FileInput/FileInput";
-import FormElement from "../UI/Form/FormElement/FormElement";
+import FileInput from "../../UI/Form/FileInput/FileInput";
+import FormElement from "../../UI/Form/FormElement/FormElement";
 
 const ArtistForm = ({onSubmit, error}) => {
-    const [state, setState] = useState({
+    const [artistData, setArtistData] = useState({
         name: "",
         information: "",
         image: "",
@@ -14,8 +14,8 @@ const ArtistForm = ({onSubmit, error}) => {
         e.preventDefault();
         const formData = new FormData();
 
-        Object.keys(state).forEach(key => {
-            formData.append(key, state[key]);
+        Object.keys(artistData).forEach(key => {
+            formData.append(key, artistData[key]);
         });
         onSubmit(formData);
     };
@@ -23,7 +23,7 @@ const ArtistForm = ({onSubmit, error}) => {
     const inputChangeHandler = e => {
         const {name, value} = e.target;
 
-        setState(prevState => {
+        setArtistData(prevState => {
             return {...prevState, [name]: value};
         });
     };
@@ -32,7 +32,7 @@ const ArtistForm = ({onSubmit, error}) => {
         const name = e.target.name;
         const file = e.target.files[0];
 
-        setState(prevState => ({...prevState, [name]: file}));
+        setArtistData(prevState => ({...prevState, [name]: file}));
     };
 
     const getFieldError = fieldName => {
@@ -61,7 +61,7 @@ const ArtistForm = ({onSubmit, error}) => {
                     label="Name"
                     name='name'
                     onChange={inputChangeHandler}
-                    value={state.name}
+                    value={artistData.name}
                     error={getFieldError('name')}
                     required={true}
                 />
@@ -70,7 +70,7 @@ const ArtistForm = ({onSubmit, error}) => {
                     label="Information"
                     name="information"
                     onChange={inputChangeHandler}
-                    value={state.information}
+                    value={artistData.information}
                 />
 
                 <Grid item>

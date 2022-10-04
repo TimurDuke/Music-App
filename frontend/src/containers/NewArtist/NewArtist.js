@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Typography} from "@mui/material";
-import ArtistForm from "../../components/ArtistForm/ArtistForm";
+import ArtistForm from "../../components/Forms/ArtistForm/ArtistForm";
 import {createArtist} from "../../store/actions/artistsActions";
 
 const NewArtist = () => {
