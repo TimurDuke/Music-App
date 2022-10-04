@@ -59,7 +59,7 @@ const run = async () => {
         published: false,
     });
 
-    const [trackTimur1, trackTimur2, trackSerkhan1, trackSerkhan2] = await Track.create({
+    const [trackTimur1, trackSerkhan1] = await Track.create({
         title: "Track Timur 1",
         artist: artist1['_id'],
         album: albumTimur['_id'],
@@ -67,13 +67,6 @@ const run = async () => {
         number: 1,
         youtube: "hUTItsO2dfw",
         published: true,
-    }, {
-        title: "Track Timur 2",
-        artist: artist1['_id'],
-        album: albumTimur['_id'],
-        duration: "3:25",
-        number: 2,
-        published: false,
     }, {
         title: "Track Serkhan 1",
         artist: artist2['_id'],
@@ -89,6 +82,13 @@ const run = async () => {
         duration: "4:15",
         number: 2,
         published: false,
+    }, {
+        title: "Track Timur 2",
+        artist: artist1['_id'],
+        album: albumTimur['_id'],
+        duration: "3:25",
+        number: 2,
+        published: false,
     });
 
     await TrackHistory.create({
@@ -97,7 +97,7 @@ const run = async () => {
         datetime: "2022-09-28T09:54:00.355Z",
     }, {
         user: user1['_id'],
-        track: trackTimur2,
+        track: trackTimur1,
         datetime: "2022-09-28T09:55:00.355Z",
     }, {
         user: user1['_id'],
@@ -109,11 +109,11 @@ const run = async () => {
         datetime: "2022-09-28T09:57:00.355Z",
     }, {
         user: user2['_id'],
-        track: trackSerkhan2,
+        track: trackSerkhan1,
         datetime: "2022-09-28T09:51:00.355Z",
     }, {
         user: user2['_id'],
-        track: trackTimur2,
+        track: trackSerkhan1,
         datetime: "2022-09-28T09:54:00.355Z",
     });
 
