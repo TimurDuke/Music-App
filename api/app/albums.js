@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
                 .populate('artist', 'name');
 
             const response = await Promise.all(albums.map(async album => {
-                const tracks = await Track.find({album: album._id});
+                const tracks = await Track.find({album: album._id, published: true});
 
                 return {...album['_doc'], tracksCount: tracks.length};
             }));

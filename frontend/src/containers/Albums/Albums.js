@@ -34,7 +34,7 @@ const Albums = ({match}) => {
             </Typography>
             {!!albums.length ? <Grid container spacing={5}>
                 {albums.map(album => (
-                    <AlbumItem
+                    album.published ?<AlbumItem
                         key={album['_id']}
                         id={album['_id']}
                         title={album.title}
@@ -42,7 +42,7 @@ const Albums = ({match}) => {
                         tracksCount={album.tracksCount}
                         artistName={album.artist.name}
                         image={album.image ? apiUrl + '/' + album.image : null}
-                    />
+                    /> : null
                 ))}
             </Grid> : <h2 style={{textAlign: 'center'}}>This artist has no albums.</h2>}
         </>

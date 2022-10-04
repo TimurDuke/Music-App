@@ -63,7 +63,7 @@ const Tracks = ({match}) => {
                 }}
             >
                 {!!tracks.length ? tracks.map(track => (
-                    <TrackItem
+                    track.published ? <TrackItem
                         key={track['_id']}
                         number={track.number}
                         title={track.title}
@@ -71,7 +71,7 @@ const Tracks = ({match}) => {
                         video={track.youtube}
                         playHandler={() => playMusicHandler(track['_id'], track.title)}
                         isDisabled={createHistoryLoading}
-                    />
+                    /> : null
                 )) : <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
             </Box>
         </>

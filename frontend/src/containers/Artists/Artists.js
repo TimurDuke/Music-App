@@ -24,12 +24,13 @@ const Artists = () => {
             />
             <Grid item container spacing={3}>
                 {!!artists.length ? artists.map(artist => (
-                    <ArtistItem
-                        key={artist['_id']}
-                        id={artist['_id']}
-                        name={artist.name}
-                        image={artist.image ? apiUrl + '/' + artist.image : null}
-                    />
+                    artist.published ?
+                        <ArtistItem
+                            key={artist['_id']}
+                            id={artist['_id']}
+                            name={artist.name}
+                            image={artist.image ? apiUrl + '/' + artist.image : null}
+                        /> : null
                 )) : null}
             </Grid>
         </>
