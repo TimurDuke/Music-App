@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', async (req, res) => {
-    const { artist } = req.query;
+    const {artist} = req.query;
 
     if (artist) {
         try {
@@ -58,7 +58,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     try {
         const album = await Album.findById(id);
@@ -74,26 +74,22 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-    const { title, artist } = req.body;
-
-    if (!title || !artist) {
-        return res.status(400).send({error: 'Data not valid'});
-    }
-
-    const albumData = {title, release: new Date().toISOString(), artist, image: null};
-
-    if (req.file) {
-        albumData.image = 'uploads/' + req.file.filename;
-    }
-
-    const album = new Album(albumData);
-
     try {
+        const {title, artist} = req.body;
+
+        const albumData = {title, release: new Date().toISOString(), artist, image: null};
+
+        if (req.file) {
+            albumData.image = 'uploads/' + req.file.filename;
+        }
+
+        const album = new Album(albumData);
+
         await album.save();
 
         res.send(album);
     } catch (e) {
-        res.status(400).send({error: e.message});
+        res.status(400).send(e);
     }
 });
 
