@@ -15,8 +15,12 @@ const Layout = ({children}) => {
         <>
             <AppBar sx={{padding: '10px 15px'}}>
                 <ToastContainer/>
-                <Grid container justifyContent='space-between' alignItems='center'>
-                    <Grid item>
+                <Grid
+                    container
+                    justifyContent={{sm: 'space-between', xs: 'center'}}
+                    alignItems='center'
+                >
+                    <Grid item sx={{marginBottom: {sm: '0px', xs: '15px'}}}>
                         <Typography
                             component={Link}
                             to='/'
@@ -31,7 +35,7 @@ const Layout = ({children}) => {
                     </Grid>
                 </Grid>
             </AppBar>
-            <Toolbar sx={{marginBottom: '20px'}}/>
+            <Toolbar sx={{marginBottom: {sm: '20px', xs: '70px'}}}/>
             <Container maxWidth="xl">
                 {children}
             </Container>
