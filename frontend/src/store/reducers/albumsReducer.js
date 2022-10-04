@@ -1,5 +1,5 @@
 import {
-    CHANGE_ALBUM_TITLE, CLEAR_ALBUMS_REDUCER,
+    CHANGE_ALBUM_TITLE, CLEAR_ALBUMS_REDUCER, CREATE_ALBUM_FAILURE, CREATE_ALBUM_REQUEST, CREATE_ALBUM_SUCCESS,
     GET_ALBUMS_FAILURE,
     GET_ALBUMS_REQUEST,
     GET_ALBUMS_SUCCESS,
@@ -29,6 +29,13 @@ const reducer = (state = initialState, actions) => {
                 albums: actions.albums,
             };
         case GET_ALBUMS_FAILURE:
+            return {...state, albumsLoading: false, albumsError: actions.error};
+
+        case CREATE_ALBUM_REQUEST:
+            return {...state, albumsLoading: true, albumsError: null};
+        case CREATE_ALBUM_SUCCESS:
+            return {...state, albumsLoading: false, albumsError: null};
+        case CREATE_ALBUM_FAILURE:
             return {...state, albumsLoading: false, albumsError: actions.error};
 
         default:

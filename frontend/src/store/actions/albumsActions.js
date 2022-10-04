@@ -1,4 +1,6 @@
 import axiosApi from "../../axiosApi";
+import {historyPush} from "./historyActions";
+import {useToastInfo} from "../../hooks";
 
 export const CHANGE_ALBUM_TITLE = 'CHANGE_ALBUM_TITLE';
 export const changeAlbumTitle = title => ({type: CHANGE_ALBUM_TITLE, title});
@@ -25,6 +27,34 @@ export const getAlbums = artistId => {
             }
         } catch (e) {
             dispatch(getAlbumsFailure(e));
+        }
+    };
+};
+
+export const CREATE_ALBUM_REQUEST = 'CREATE_ALBUM_REQUEST';
+export const CREATE_ALBUM_SUCCESS = 'CREATE_ALBUM_SUCCESS';
+export const CREATE_ALBUM_FAILURE = 'CREATE_ALBUM_FAILURE';
+
+const createAlbumRequest = () => ({type: CREATE_ALBUM_REQUEST});
+const createAlbumSuccess = () => ({type: CREATE_ALBUM_SUCCESS});
+const createAlbumFailure = error => ({type: CREATE_ALBUM_FAILURE, error});
+
+export const createAlbum = albumData => {
+    return async dispatch => {
+        try {
+            dispatch(createAlbumRequest());
+
+            await axiosApi.post('/albums', albumData);
+            await dispatch(createAlbumSuccess());
+            await dispatch(historyPush('/'));
+
+            useToastInfo('The album has been created, wait for the administration to check.');
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(createAlbumFailure(e.response.data));
+            } else {
+                dispatch(createAlbumFailure({global: 'No internet'}));
+            }
         }
     };
 };

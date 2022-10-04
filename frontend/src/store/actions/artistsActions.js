@@ -30,29 +30,29 @@ export const getArtists = () => {
     };
 };
 
-export const CREATE_ARTISTS_REQUEST = 'CREATE_ARTISTS_REQUEST';
-export const CREATE_ARTISTS_SUCCESS = 'CREATE_ARTISTS_SUCCESS';
-export const CREATE_ARTISTS_FAILURE = 'CREATE_ARTISTS_FAILURE';
+export const CREATE_ARTIST_REQUEST = 'CREATE_ARTIST_REQUEST';
+export const CREATE_ARTIST_SUCCESS = 'CREATE_ARTIST_SUCCESS';
+export const CREATE_ARTIST_FAILURE = 'CREATE_ARTIST_FAILURE';
 
-const createArtistsRequest = () => ({type: CREATE_ARTISTS_REQUEST});
-const createArtistsSuccess = () => ({type: CREATE_ARTISTS_SUCCESS});
-const createArtistsFailure = error => ({type: CREATE_ARTISTS_FAILURE, error});
+const createArtistRequest = () => ({type: CREATE_ARTIST_REQUEST});
+const createArtistSuccess = () => ({type: CREATE_ARTIST_SUCCESS});
+const createArtistFailure = error => ({type: CREATE_ARTIST_FAILURE, error});
 
 export const createArtist = artistData => {
     return async dispatch => {
         try {
-            dispatch(createArtistsRequest());
+            dispatch(createArtistRequest());
 
             await axiosApi.post('/artists', artistData);
-            await dispatch(createArtistsSuccess());
+            await dispatch(createArtistSuccess());
             await dispatch(historyPush('/'));
 
             useToastInfo('The artist has been created, wait for the administration to check.');
         } catch (e) {
             if (e.response && e.response.data) {
-                dispatch(createArtistsFailure(e.response.data));
+                dispatch(createArtistFailure(e.response.data));
             } else {
-                dispatch(createArtistsFailure({global: 'No internet'}));
+                dispatch(createArtistFailure({global: 'No internet'}));
             }
         }
     };

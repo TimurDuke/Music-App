@@ -10,6 +10,7 @@ import TrackHistory from "./containers/TrackHistory/TrackHistory";
 import {useSelector} from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import NewArtist from "./containers/NewArtist/NewArtist";
+import newAlbum from "./containers/NewAlbum/NewAlbum";
 
 const App = () => {
     const user = useSelector(state => state.users.user);
@@ -48,6 +49,12 @@ const App = () => {
                     redirectTo='/login'
                     path='/add/artist'
                     component={NewArtist}
+                />
+                <ProtectedRoute
+                    isAllowed={user}
+                    redirectTo='/login'
+                    path='/add/album'
+                    component={newAlbum}
                 />
                 <Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>
             </Switch>
