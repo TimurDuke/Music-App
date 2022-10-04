@@ -32,30 +32,26 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-    const { name, information } = req.body;
-
-    if (!name) {
-        return res.status(400).send({error: 'The name field must be filled in.'});
-    }
-
-    const artistData = {
-        name,
-        information: information || null,
-        image: null,
-    };
-
-    if (req.file) {
-        artistData.image = 'uploads/' + req.file.filename;
-    }
-
-    const artist = new Artist(artistData);
-
     try {
+        const {name, information} = req.body;
+
+        const artistData = {
+            name,
+            information: information || null,
+            image: null,
+        };
+
+        if (req.file) {
+            artistData.image = 'uploads/' + req.file.filename;
+        }
+
+        const artist = new Artist(artistData);
+
         await artist.save();
 
         res.send(artist);
     } catch (e) {
-        res.status(400).send({error: e.message});
+        res.status(400).send(e);
     }
 });
 

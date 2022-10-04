@@ -1,4 +1,6 @@
 import axiosApi from "../../axiosApi";
+import {historyPush} from "./historyActions";
+import {useToastInfo} from "../../hooks";
 
 export const CHANGE_ARTIST_NAME = 'CHANGE_ARTIST_NAME';
 export const changeArtistName = name => ({type: CHANGE_ARTIST_NAME, name});
@@ -24,6 +26,34 @@ export const getArtists = () => {
             }
         } catch (e) {
             dispatch(getArtistsFailure(e));
+        }
+    };
+};
+
+export const CREATE_ARTISTS_REQUEST = 'CREATE_ARTISTS_REQUEST';
+export const CREATE_ARTISTS_SUCCESS = 'CREATE_ARTISTS_SUCCESS';
+export const CREATE_ARTISTS_FAILURE = 'CREATE_ARTISTS_FAILURE';
+
+const createArtistsRequest = () => ({type: CREATE_ARTISTS_REQUEST});
+const createArtistsSuccess = () => ({type: CREATE_ARTISTS_SUCCESS});
+const createArtistsFailure = error => ({type: CREATE_ARTISTS_FAILURE, error});
+
+export const createArtist = artistData => {
+    return async dispatch => {
+        try {
+            dispatch(createArtistsRequest());
+
+            await axiosApi.post('/artists', artistData);
+            await dispatch(createArtistsSuccess());
+            await dispatch(historyPush('/'));
+
+            useToastInfo('The artist has been created, wait for the administration to check.');
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(createArtistsFailure(e.response.data));
+            } else {
+                dispatch(createArtistsFailure({global: 'No internet'}));
+            }
         }
     };
 };

@@ -1,5 +1,5 @@
 import {
-    CHANGE_ARTIST_NAME, CLEAR_ARTISTS_REDUCER,
+    CHANGE_ARTIST_NAME, CLEAR_ARTISTS_REDUCER, CREATE_ARTISTS_FAILURE, CREATE_ARTISTS_REQUEST, CREATE_ARTISTS_SUCCESS,
     GET_ARTISTS_FAILURE,
     GET_ARTISTS_REQUEST,
     GET_ARTISTS_SUCCESS,
@@ -24,6 +24,13 @@ const reducer = (state = initialState, actions) => {
         case GET_ARTISTS_SUCCESS:
             return {...state, artistsLoading: false, artistsError: null, artists: actions.artists};
         case GET_ARTISTS_FAILURE:
+            return {...state, artistsLoading: false, artistsError: actions.error};
+
+        case CREATE_ARTISTS_REQUEST:
+            return {...state, artistsLoading: true, artistsError: null};
+        case CREATE_ARTISTS_SUCCESS:
+            return {...state, artistsLoading: false, artistsError: null};
+        case CREATE_ARTISTS_FAILURE:
             return {...state, artistsLoading: false, artistsError: actions.error};
 
         default:
