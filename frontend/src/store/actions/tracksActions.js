@@ -1,4 +1,4 @@
-import {useHeadersAuth, useToastError, useToastWarn} from "../../hooks";
+import {useToastError, useToastWarn} from "../../hooks";
 import axiosApi from "../../axiosApi";
 
 export const CLEAR_TRACKS_REDUCER = 'CLEAR_TRACKS_REDUCER';
@@ -13,13 +13,11 @@ const getTracksSuccess = tracks => ({type: GET_TRACKS_SUCCESS, tracks});
 const getTracksFailure = error => ({type: GET_TRACKS_FAILURE, error});
 
 export const getTracks = albumId => {
-    return async (dispatch, getState) => {
+    return async dispatch => {
         try {
-            const headers = useHeadersAuth(getState());
-
             dispatch(getTracksRequest());
 
-            const {data} = await axiosApi.get('/tracks?album=' + albumId, {headers});
+            const {data} = await axiosApi.get('/tracks?album=' + albumId);
             if (data) {
                 dispatch(getTracksSuccess(data));
             }

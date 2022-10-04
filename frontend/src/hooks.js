@@ -47,5 +47,3 @@ export const useToastInfo = message => {
         progress: undefined,
     });
 };
-
-export const useHeadersAuth = state => ({'Authorization': state.users.user && state.users.user.token});
