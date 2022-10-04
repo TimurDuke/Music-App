@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import YouTube from "react-youtube";
 
-import ModalComponent from "../UI/Modal/Modal";
+import ModalComponent from "../../UI/Modal/Modal";
 
 const TrackItem = ({number, title, duration, playHandler, isDisabled, video}) => (
     <>
