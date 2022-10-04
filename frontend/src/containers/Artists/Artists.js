@@ -3,15 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {Grid} from "@mui/material";
 
 import {apiUrl} from "../../config";
-import {getArtists} from "../../store/actions/musicActions";
 import ArtistItem from "../../components/ArtistItem/ArtistItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
+import {getArtists} from "../../store/actions/artistsActions";
 
 const Artists = () => {
     const dispatch = useDispatch();
 
-    const artists = useSelector(state => state.music.artists);
-    const loading = useSelector(state => state.music.artistsLoading);
+    const artists = useSelector(state => state.artists.artists);
+    const loading = useSelector(state => state.artists.artistsLoading);
 
     useEffect(() => {
         dispatch(getArtists());

@@ -3,24 +3,31 @@ import {useDispatch, useSelector} from "react-redux";
 import {Grid, Typography} from "@mui/material";
 
 import {apiUrl} from "../../config";
-import {clearMusicState, getAlbums} from "../../store/actions/musicActions";
 import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
+import {changeArtistName, clearArtistsReducer} from "../../store/actions/artistsActions";
+import {clearAlbumsReducer, getAlbums} from "../../store/actions/albumsActions";
 
 const Albums = ({match}) => {
     const dispatch = useDispatch();
 
-    const albums = useSelector(state => state.music.albums);
-    const artistName = useSelector(state => state.music.artistName);
-    const loading = useSelector(state => state.music.albumsLoading);
+    const albums = useSelector(state => state.albums.albums);
+    const artistName = useSelector(state => state.artists.artistName);
+    const loading = useSelector(state => state.albums.albumsLoading);
 
     useEffect(() => {
         dispatch(getAlbums(match.params.id));
 
+        if (!!albums.length && albums[0].artist?.name) {
+            dispatch(changeArtistName(albums[0].artist.name));
+        }
+
         return () => {
-            dispatch(clearMusicState());
+            dispatch(clearAlbumsReducer());
+            dispatch(clearArtistsReducer());
         };
-    }, [dispatch, match.params.id]);
+        // eslint-disable-next-line
+    }, [dispatch, match.params.id, ]);
 
     return (
         <>

@@ -2,30 +2,40 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Typography} from "@mui/material";
 
-import {clearMusicState, getTracks} from "../../store/actions/musicActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
 import {createHistory} from "../../store/actions/tracksHistoryActions";
+import {changeAlbumTitle, clearAlbumsReducer} from "../../store/actions/albumsActions";
+import {changeArtistName, clearArtistsReducer} from "../../store/actions/artistsActions";
+import {clearTracksReducer, getTracks} from "../../store/actions/tracksActions";
 
 const Tracks = ({match}) => {
     const dispatch = useDispatch();
 
-    const tracks = useSelector(state => state.music.tracks);
+    const tracks = useSelector(state => state.tracks.tracks);
     const user = useSelector(state => state.users.user);
 
-    const artistName = useSelector(state => state.music.artistName);
-    const albumTitle = useSelector(state => state.music.albumTitle);
-    const loading = useSelector(state => state.music.tracksLoading);
+    const artistName = useSelector(state => state.artists.artistName);
+    const albumTitle = useSelector(state => state.albums.albumTitle);
+    const loading = useSelector(state => state.tracks.tracksLoading);
     const createHistoryLoading = useSelector(state => state.tracksHistory.historyLoading);
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));
 
+        if (!!tracks.length && tracks[0].album?.title && tracks[0].album?.artist?.name) {
+            dispatch(changeAlbumTitle(tracks[0].album.title));
+            dispatch(changeArtistName(tracks[0].album?.artist?.name));
+        }
+
         return () => {
-            dispatch(clearMusicState());
+            dispatch(clearAlbumsReducer());
+            dispatch(clearArtistsReducer());
+            dispatch(clearTracksReducer());
         };
-    }, [dispatch, match.params.id]);
+        // eslint-disable-next-line
+    }, [dispatch, match.params.id, ]);
 
     if (!user) {
         return <Redirect to='/login'/>
