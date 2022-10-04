@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Box, List} from "@mui/material";
+import {Grid} from "@mui/material";
 import {Redirect} from "react-router-dom";
 
 import HistoryItem from "../../components/HistoryItem/HistoryItem";
@@ -27,20 +27,18 @@ const TrackHistory = () => {
             <Preloader
                 showPreloader={loading}
             />
-            <Box>
-                {!!tracksHistory.length ?
-                    <List sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                        {tracksHistory.map(history => (
-                            <HistoryItem
-                                key={history['_id']}
-                                artistName={history.track.album.artist.name}
-                                trackName={history.track.title}
-                                datetime={history.datetime}
-                            />
-                        ))}
-                    </List> : <h2 style={{textAlign: 'center'}}>You don't have track history yet.</h2>
-                }
-            </Box>
+            {!!tracksHistory.length ?
+                <Grid container spacing={2} alignItems='center' justifyContent='center'>
+                    {tracksHistory.map(history => (
+                        <HistoryItem
+                            key={history['_id']}
+                            artistName={history.track.album.artist.name}
+                            trackName={history.track.title}
+                            datetime={history.datetime}
+                        />
+                    ))}
+                </Grid> : <h2 style={{textAlign: 'center'}}>You don't have track history yet.</h2>
+            }
         </>
     );
 };
