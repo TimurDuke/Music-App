@@ -63,8 +63,27 @@ const UserMenu = ({user}) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to='/add/artist'
+                >
+                    Add artist
+                </MenuItem>
+                <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to='/add/album'
+                >
+                    Add album
+                </MenuItem>
+                <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to='/add/track'
+                >
+                    Add track
+                </MenuItem>
                 <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
             </Menu>
         </div>
