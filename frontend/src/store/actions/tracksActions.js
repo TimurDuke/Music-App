@@ -92,3 +92,27 @@ export const getPersonalTracks = () => {
         }
     };
 };
+
+export const GET_UNPUBLISH_TRACKS_REQUEST = 'GET_UNPUBLISH_TRACKS_REQUEST';
+export const GET_UNPUBLISH_TRACKS_SUCCESS = 'GET_UNPUBLISH_TRACKS_SUCCESS';
+export const GET_UNPUBLISH_TRACKS_FAILURE = 'GET_UNPUBLISH_TRACKS_FAILURE';
+
+const getUnpublishTracksRequest = () => ({type: GET_UNPUBLISH_TRACKS_REQUEST});
+const getUnpublishTracksSuccess = tracks => ({type: GET_UNPUBLISH_TRACKS_SUCCESS, tracks});
+const getUnpublishTracksFailure = error => ({type: GET_UNPUBLISH_TRACKS_FAILURE, error});
+
+export const getUnpublishTracks = () => {
+    return async dispatch => {
+        try {
+            dispatch(getUnpublishTracksRequest());
+
+            const {data} = await axiosApi.get('/tracks/not_publish');
+
+            if (data) {
+                dispatch(getUnpublishTracksSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getUnpublishTracksFailure(e));
+        }
+    };
+};

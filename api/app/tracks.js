@@ -53,6 +53,16 @@ router.get('/personal', auth, async (req, res) => {
     }
 });
 
+router.get('/not_publish', auth, permit('admin'), async (req, res) => {
+    try {
+        const tracks = await Track.find({published: false});
+
+        res.send(tracks);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const { title, artist, album, duration, number, youtube } = req.body;

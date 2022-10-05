@@ -7,7 +7,7 @@ import {
     GET_PERSONAL_TRACKS_SUCCESS,
     GET_TRACKS_FAILURE,
     GET_TRACKS_REQUEST,
-    GET_TRACKS_SUCCESS,
+    GET_TRACKS_SUCCESS, GET_UNPUBLISH_TRACKS_FAILURE, GET_UNPUBLISH_TRACKS_REQUEST, GET_UNPUBLISH_TRACKS_SUCCESS,
 } from "../actions/tracksActions";
 
 const initialState = {
@@ -47,6 +47,12 @@ const reducer = (state = initialState, actions) => {
         case GET_PERSONAL_TRACKS_FAILURE:
             return {...state, tracksLoading: false, tracksError: null};
 
+        case GET_UNPUBLISH_TRACKS_REQUEST:
+            return {...state, tracksLoading: true, tracksError: null};
+        case GET_UNPUBLISH_TRACKS_SUCCESS:
+            return {...state, tracksLoading: false, tracksError: null, tracks: actions.tracks};
+        case GET_UNPUBLISH_TRACKS_FAILURE:
+            return {...state, tracksLoading: false, tracksError: null};
         default:
             return state;
     }
