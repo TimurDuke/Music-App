@@ -1,5 +1,6 @@
-import {useToastError, useToastWarn} from "../../hooks";
+import {useToastError, useToastInfo, useToastWarn} from "../../hooks";
 import axiosApi from "../../axiosApi";
+import {historyPush} from "./historyActions";
 
 export const CLEAR_TRACKS_REDUCER = 'CLEAR_TRACKS_REDUCER';
 export const clearTracksReducer = () => ({type: CLEAR_TRACKS_REDUCER});
@@ -31,6 +32,38 @@ export const getTracks = albumId => {
                 dispatch(getTracksFailure(e.response.data));
             } else {
                 dispatch(getTracksFailure({global: 'No internet'}));
+            }
+        }
+    };
+};
+
+export const CREATE_TRACK_REQUEST = 'CREATE_TRACK_REQUEST';
+export const CREATE_TRACK_SUCCESS = 'CREATE_TRACK_SUCCESS';
+export const CREATE_TRACK_FAILURE = 'CREATE_TRACK_FAILURE';
+
+const createTrackRequest = () => ({type: CREATE_TRACK_REQUEST});
+const createTrackSuccess = () => ({type: CREATE_TRACK_SUCCESS});
+const createTrackFailure = error => ({type: CREATE_TRACK_FAILURE, error});
+
+export const createTrack = trackData => {
+    return async dispatch => {
+        try {
+            dispatch(createTrackRequest());
+
+            await axiosApi.post('/tracks', trackData);
+            await dispatch(createTrackSuccess());
+            await dispatch(historyPush('/'));
+
+            useToastInfo('The track has been created, wait for the administration to check.');
+        } catch (e) {
+            if (e.response && e.response.data) {
+                if (!e.response.data.errors) {
+                    useToastError('The Artist and Album fields must be filled in.');
+                }
+
+                dispatch(createTrackFailure(e.response.data));
+            } else {
+                dispatch(createTrackFailure({global: 'No internet'}));
             }
         }
     };
