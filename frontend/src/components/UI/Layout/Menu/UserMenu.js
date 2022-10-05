@@ -95,6 +95,13 @@ const UserMenu = ({user}) => {
                 >
                     Add track
                 </MenuItem>
+                {user.role === 'admin' ? <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to='/unpublished'
+                >
+                    Unpublished entities
+                </MenuItem> : null}
                 <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
             </Menu>
         </div>

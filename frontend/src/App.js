@@ -13,6 +13,7 @@ import NewArtist from "./containers/NewArtist/NewArtist";
 import NewAlbum from "./containers/NewAlbum/NewAlbum";
 import NewTrack from "./containers/NewTrack/NewTrack";
 import Entities from "./containers/Entities/Entities";
+import UnpublishedEntities from "./containers/UnpublishedEntities/UnpublishedEntities";
 
 const App = () => {
     const user = useSelector(state => state.users.user);
@@ -78,6 +79,13 @@ const App = () => {
                     redirectTo='/login'
                     path='/entities'
                     component={Entities}
+                />
+
+                <ProtectedRoute
+                    isAllowed={user && user.role === 'admin'}
+                    redirectTo='/'
+                    path='/unpublished'
+                    component={UnpublishedEntities}
                 />
 
                 <Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>
