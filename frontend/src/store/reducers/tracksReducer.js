@@ -1,5 +1,5 @@
 import {
-    CLEAR_TRACKS_REDUCER,
+    CLEAR_TRACKS_REDUCER, CREATE_TRACK_FAILURE, CREATE_TRACK_REQUEST, CREATE_TRACK_SUCCESS,
     GET_TRACKS_FAILURE,
     GET_TRACKS_REQUEST,
     GET_TRACKS_SUCCESS,
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, actions) => {
-    switch(actions.type) {
+    switch (actions.type) {
         case CLEAR_TRACKS_REDUCER:
             return initialState;
 
@@ -26,6 +26,13 @@ const reducer = (state = initialState, actions) => {
                 tracks: actions.tracks,
             };
         case GET_TRACKS_FAILURE:
+            return {...state, tracksLoading: false, tracksError: actions.error};
+
+        case CREATE_TRACK_REQUEST:
+            return {...state, tracksLoading: true, tracksError: null};
+        case CREATE_TRACK_SUCCESS:
+            return {...state, tracksLoading: false, tracksError: null};
+        case CREATE_TRACK_FAILURE:
             return {...state, tracksLoading: false, tracksError: actions.error};
 
         default:

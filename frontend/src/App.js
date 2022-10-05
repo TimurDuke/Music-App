@@ -10,7 +10,8 @@ import TrackHistory from "./containers/TrackHistory/TrackHistory";
 import {useSelector} from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import NewArtist from "./containers/NewArtist/NewArtist";
-import newAlbum from "./containers/NewAlbum/NewAlbum";
+import NewAlbum from "./containers/NewAlbum/NewAlbum";
+import NewTrack from "./containers/NewTrack/NewTrack";
 
 const App = () => {
     const user = useSelector(state => state.users.user);
@@ -19,43 +20,58 @@ const App = () => {
         <Layout>
             <Switch>
                 <Route path='/' exact component={Artists}/>
+
                 <ProtectedRoute
                     isAllowed={!user}
                     redirectTo='/'
                     path='/register'
                     component={Register}
                 />
+
                 <ProtectedRoute
                     isAllowed={!user}
                     redirectTo='/'
                     path='/login'
                     component={Login}
                 />
+
                 <ProtectedRoute
                     isAllowed={user}
                     redirectTo='/login'
                     path='/track_history'
                     component={TrackHistory}
                 />
+
                 <Route path='/artist/:artist/:id' component={Albums}/>
+
                 <ProtectedRoute
                     isAllowed={user}
                     redirectTo='/login'
                     path='/album/:artist/:album/:id'
                     component={Tracks}
                 />
+
                 <ProtectedRoute
                     isAllowed={user}
                     redirectTo='/login'
                     path='/add/artist'
                     component={NewArtist}
                 />
+
                 <ProtectedRoute
                     isAllowed={user}
                     redirectTo='/login'
                     path='/add/album'
-                    component={newAlbum}
+                    component={NewAlbum}
                 />
+
+                <ProtectedRoute
+                    isAllowed={user}
+                    redirectTo='/login'
+                    path='/add/track'
+                    component={NewTrack}
+                />
+
                 <Route render={() => <h1 style={{textAlign: 'center'}}>Not found!</h1>}/>
             </Switch>
         </Layout>
