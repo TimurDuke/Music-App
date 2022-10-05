@@ -40,6 +40,7 @@ const FileInput = ({onChange, name, label}) => {
             <Grid container direction="row" spacing={2} alignItems="center">
                 <Grid item xs>
                     <TextField
+                        fullWidth
                         disabled
                         label={label}
                         value={filename}

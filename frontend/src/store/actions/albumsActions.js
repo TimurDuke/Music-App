@@ -58,3 +58,27 @@ export const createAlbum = albumData => {
         }
     };
 };
+
+export const GET_ALBUMS_BY_ARTIST_REQUEST = 'GET_ALBUMS_BY_ARTIST_REQUEST';
+export const GET_ALBUMS_BY_ARTIST_SUCCESS = 'GET_ALBUMS_BY_ARTIST_SUCCESS';
+export const GET_ALBUMS_BY_ARTIST_FAILURE = 'GET_ALBUMS_BY_ARTIST_FAILURE';
+
+const getAlbumsByArtistRequest = () => ({type: GET_ALBUMS_BY_ARTIST_REQUEST});
+const getAlbumsByArtistSuccess = albums => ({type: GET_ALBUMS_BY_ARTIST_SUCCESS, albums});
+const getAlbumsByArtistFailure = error => ({type: GET_ALBUMS_BY_ARTIST_FAILURE, error});
+
+export const getAlbumsByArtist = artistId => {
+    return async dispatch => {
+        try {
+            dispatch(getAlbumsByArtistRequest());
+
+            const {data} = await axiosApi.get('/albums?artist=' + artistId);
+
+            if (data) {
+                dispatch(getAlbumsByArtistSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getAlbumsByArtistFailure(e));
+        }
+    };
+};

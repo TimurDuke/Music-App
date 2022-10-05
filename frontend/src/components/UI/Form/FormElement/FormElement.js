@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid, TextField} from "@mui/material";
 import PropTypes from 'prop-types';
 
-const FormElement = ({name, value, onChange, label, error, type, required}) => (
+const FormElement = ({name, value, onChange, label, error, type, required, inputProps}) => (
     <Grid item xs={12}>
         <TextField
             fullWidth
@@ -15,6 +15,7 @@ const FormElement = ({name, value, onChange, label, error, type, required}) => (
             onChange={onChange}
             error={Boolean(error)}
             helperText={error}
+            inputProps={inputProps}
         />
     </Grid>
 );
@@ -27,6 +28,7 @@ FormElement.propTypes = {
     error: PropTypes.string,
     type: PropTypes.string,
     required: PropTypes.bool,
+    inputProps: PropTypes.object,
 };
 
 export default FormElement;
