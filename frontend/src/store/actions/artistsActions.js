@@ -57,3 +57,27 @@ export const createArtist = artistData => {
         }
     };
 };
+
+export const GET_PERSONAL_ARTISTS_REQUEST = 'GET_PERSONAL_ARTISTS_REQUEST';
+export const GET_PERSONAL_ARTISTS_SUCCESS = 'GET_PERSONAL_ARTISTS_SUCCESS';
+export const GET_PERSONAL_ARTISTS_FAILURE = 'GET_PERSONAL_ARTISTS_FAILURE';
+
+const getPersonalArtistsRequest = () => ({type: GET_PERSONAL_ARTISTS_REQUEST});
+const getPersonalArtistsSuccess = artists => ({type: GET_PERSONAL_ARTISTS_SUCCESS, artists});
+const getPersonalArtistsFailure = error => ({type: GET_PERSONAL_ARTISTS_FAILURE, error});
+
+export const getPersonalArtists = () => {
+    return async dispatch => {
+        try {
+            dispatch(getPersonalArtistsRequest());
+
+            const {data} = await axiosApi.get('/artists/personal');
+
+            if (data) {
+                dispatch(getPersonalArtistsSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getPersonalArtistsFailure(e));
+        }
+    };
+};
