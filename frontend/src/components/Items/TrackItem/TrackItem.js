@@ -9,6 +9,7 @@ import YouTube from "react-youtube";
 import PropTypes from "prop-types";
 
 import ModalComponent from "../../UI/Modal/Modal";
+import DeleteButton from "../../UI/AdminButtons/DeleteButton/DeleteButton";
 
 const TrackItem = ({number, title, duration, playHandler, isDisabled, video, user, deleteHandler}) => (
     <>
@@ -19,15 +20,9 @@ const TrackItem = ({number, title, duration, playHandler, isDisabled, video, use
                 id="panel1a-header"
             >
                 <Typography>№{number} <strong>{title}</strong></Typography>
-                {user?.role === 'admin' ? <Button
-                    sx={{marginLeft: '20px'}}
-                    size='small'
-                    variant='outlined'
-                    color='error'
-                    onClick={deleteHandler}
-                >
-                    Delete
-                </Button> : null}
+                {user?.role === 'admin' ?
+                    <DeleteButton deleteHandler={deleteHandler}/>
+                    : null}
             </AccordionSummary>
             <AccordionDetails
                 sx={{

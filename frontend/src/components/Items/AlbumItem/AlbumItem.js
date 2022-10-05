@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import PropTypes from "prop-types";
+import DeleteButton from "../../UI/AdminButtons/DeleteButton/DeleteButton";
 
 const AlbumItem = ({image, title, release, tracksCount, artistName, id, user, deleteHandler}) => (
     <Grid item xs={12} sm={3} lg={2}>
@@ -43,15 +44,9 @@ const AlbumItem = ({image, title, release, tracksCount, artistName, id, user, de
                     justifyContent: 'flex-end'
                 }}
             >
-                {user?.role === 'admin' ? <Button
-                    sx={{marginRight: '20px'}}
-                    size='small'
-                    variant='outlined'
-                    color='error'
-                    onClick={deleteHandler}
-                >
-                    Delete
-                </Button> : null}
+                {user?.role === 'admin' ?
+                    <DeleteButton deleteHandler={deleteHandler}/>
+                    : null}
                 <Button
                     variant='outlined'
                     component={Link}

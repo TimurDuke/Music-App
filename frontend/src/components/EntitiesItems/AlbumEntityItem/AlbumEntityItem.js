@@ -1,9 +1,12 @@
 import React from 'react';
-import {Box, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
+import {Box, Card, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import PropTypes from "prop-types";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import {apiUrl} from "../../../config";
+import DeleteButton from "../../UI/AdminButtons/DeleteButton/DeleteButton";
+import PublishButton from "../../UI/AdminButtons/PublishButton/PublishButton";
 
-const AlbumEntityItem = ({image, title, release, isPublished}) => (
+const AlbumEntityItem = ({image, title, release, isPublished, user, deleteHandler, publishHandler}) => (
     <Grid item xs>
         <Card
             sx={{
@@ -17,7 +20,7 @@ const AlbumEntityItem = ({image, title, release, isPublished}) => (
             {image ? <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <CardMedia
                         title={title}
-                        image={image}
+                        image={apiUrl + image}
                         sx={{
                             height: 100,
                             width: 100,
@@ -33,26 +36,26 @@ const AlbumEntityItem = ({image, title, release, isPublished}) => (
                 <Typography variant="body2" color="textSecondary" gutterBottom>
                     {new Date(release).toLocaleDateString()}
                 </Typography>
+                <Box sx={{display: 'flex'}}>
+                    {user?.role === 'admin' ?
+                        <DeleteButton deleteHandler={deleteHandler} height='20%'/>
+                        : null}
+                    {user?.role === 'admin' ?
+                        <PublishButton publishHandler={publishHandler}/>
+                        : null}
+                    {!isPublished ? <Typography
+                        variant='h6'
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            color: '#f84343'
+                        }}
+                    >
+                        <HourglassTopIcon/>
+                        Not published
+                    </Typography> : null}
+                </Box>
             </CardContent>
-            {!isPublished ? <CardActions
-                sx={{
-                    flexGrow: '1',
-                    alignItems: 'flex-end',
-                    justifyContent: 'flex-end'
-                }}
-            >
-                <Typography
-                    variant='h6'
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: '#f84343'
-                    }}
-                >
-                    <HourglassTopIcon/>
-                    Not published
-                </Typography>
-            </CardActions> : null}
         </Card>
     </Grid>
 );
@@ -62,6 +65,9 @@ AlbumEntityItem.propTypes = {
     release: PropTypes.string.isRequired,
     isPublished: PropTypes.bool.isRequired,
     image: PropTypes.string,
+    user: PropTypes.object,
+    deleteHandler: PropTypes.func,
+    publishHandler: PropTypes.func,
 };
 
 export default AlbumEntityItem;

@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Box, Button, Card, CardActions, CardHeader, CardMedia, Grid} from "@mui/material";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import PropTypes from "prop-types";
+import DeleteButton from "../../UI/AdminButtons/DeleteButton/DeleteButton";
 
 const ArtistItem = ({name, image, id, user, deleteHandler}) => (
     <Grid item xs={12} sm={4} lg={3}>
@@ -36,15 +37,9 @@ const ArtistItem = ({name, image, id, user, deleteHandler}) => (
                     justifyContent: 'flex-end'
                 }}
             >
-                {user?.role === 'admin' ? <Button
-                    sx={{marginRight: '20px'}}
-                    size='small'
-                    variant='outlined'
-                    color='error'
-                    onClick={deleteHandler}
-                >
-                    Delete
-                </Button> : null}
+                {user?.role === 'admin' ?
+                    <DeleteButton deleteHandler={deleteHandler}/>
+                    : null}
                 <Button
                     size='small'
                     variant='outlined'
