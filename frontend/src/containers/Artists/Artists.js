@@ -10,6 +10,7 @@ import {getArtists} from "../../store/actions/artistsActions";
 const Artists = () => {
     const dispatch = useDispatch();
 
+    const user = useSelector(state => state.users.user);
     const artists = useSelector(state => state.artists.artists);
     const loading = useSelector(state => state.artists.artistsLoading);
 
@@ -30,6 +31,7 @@ const Artists = () => {
                             id={artist['_id']}
                             name={artist.name}
                             image={artist.image ? apiUrl + '/' + artist.image : null}
+                            user={user}
                         /> : null
                 )) : null}
             </Grid>

@@ -6,10 +6,11 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Box from "@mui/material/Box";
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import YouTube from "react-youtube";
+import PropTypes from "prop-types";
 
 import ModalComponent from "../../UI/Modal/Modal";
 
-const TrackItem = ({number, title, duration, playHandler, isDisabled, video}) => (
+const TrackItem = ({number, title, duration, playHandler, isDisabled, video, user, deleteHandler}) => (
     <>
         <Accordion sx={{width: '60%'}}>
             <AccordionSummary
@@ -18,6 +19,15 @@ const TrackItem = ({number, title, duration, playHandler, isDisabled, video}) =>
                 id="panel1a-header"
             >
                 <Typography>№{number} <strong>{title}</strong></Typography>
+                {user?.role === 'admin' ? <Button
+                    sx={{marginLeft: '20px'}}
+                    size='small'
+                    variant='outlined'
+                    color='error'
+                    onClick={deleteHandler}
+                >
+                    Delete
+                </Button> : null}
             </AccordionSummary>
             <AccordionDetails
                 sx={{
@@ -69,7 +79,7 @@ const TrackItem = ({number, title, duration, playHandler, isDisabled, video}) =>
                             }}
                         >
                             <YouTube
-                                videoId={video}
+                                videoId={video.split("v=")[1]}
                                 opts={{
                                     height: '449',
                                     width: '800',
@@ -84,5 +94,16 @@ const TrackItem = ({number, title, duration, playHandler, isDisabled, video}) =>
         </Accordion>
     </>
 );
+
+TrackItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
+    playHandler: PropTypes.func.isRequired,
+    number: PropTypes.number.isRequired,
+    isDisabled: PropTypes.bool.isRequired,
+    video: PropTypes.string,
+    user: PropTypes.object,
+    deleteHandler: PropTypes.func,
+};
 
 export default TrackItem;

@@ -81,6 +81,7 @@ const Tracks = ({match}) => {
                         video={track.youtube}
                         playHandler={() => playMusicHandler(track['_id'], track.title)}
                         isDisabled={createHistoryLoading}
+                        user={user}
                     /> : null
                 )) : <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
             </Box>

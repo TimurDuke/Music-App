@@ -11,6 +11,7 @@ import {clearAlbumsReducer, getAlbums} from "../../store/actions/albumsActions";
 const Albums = ({match}) => {
     const dispatch = useDispatch();
 
+    const user = useSelector(state => state.users.user);
     const albums = useSelector(state => state.albums.albums);
     const artistName = useSelector(state => state.artists.artistName);
     const loading = useSelector(state => state.albums.albumsLoading);
@@ -27,7 +28,7 @@ const Albums = ({match}) => {
             dispatch(clearArtistsReducer());
         };
         // eslint-disable-next-line
-    }, [dispatch, match.params.id, ]);
+    }, [dispatch, match.params.id]);
 
     return (
         <>
@@ -49,6 +50,7 @@ const Albums = ({match}) => {
                         tracksCount={album.tracksCount}
                         artistName={album.artist.name}
                         image={album.image ? apiUrl + '/' + album.image : null}
+                        user={user}
                     /> : null
                 ))}
             </Grid> : <h2 style={{textAlign: 'center'}}>This artist has no albums.</h2>}

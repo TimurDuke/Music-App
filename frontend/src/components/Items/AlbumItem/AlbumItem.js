@@ -1,8 +1,9 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
+import PropTypes from "prop-types";
 
-const AlbumItem = props => (
+const AlbumItem = ({image, title, release, tracksCount, artistName, id, user, deleteHandler}) => (
     <Grid item xs={12} sm={3} lg={2}>
         <Card
             sx={{
@@ -12,10 +13,10 @@ const AlbumItem = props => (
                 flexGrow: '1'
             }}
         >
-            {props.image ? <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            {image ? <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <CardMedia
-                        title={props.title}
-                        image={props.image}
+                        title={title}
+                        image={image}
                         sx={{
                             height: 100,
                             width: 100,
@@ -26,13 +27,13 @@ const AlbumItem = props => (
                 : null}
             <CardContent>
                 <Typography gutterBottom variant="h5">
-                    <strong>{props.title}</strong>
+                    <strong>{title}</strong>
                 </Typography>
                 <Typography variant="body2" color="textSecondary" gutterBottom>
-                    {new Date(props.release).toLocaleDateString()}
+                    {new Date(release).toLocaleDateString()}
                 </Typography>
                 <Typography variant="body">
-                    Tracks count: {props.tracksCount}
+                    Tracks count: {tracksCount}
                 </Typography>
             </CardContent>
             <CardActions
@@ -42,10 +43,19 @@ const AlbumItem = props => (
                     justifyContent: 'flex-end'
                 }}
             >
+                {user?.role === 'admin' ? <Button
+                    sx={{marginRight: '20px'}}
+                    size='small'
+                    variant='outlined'
+                    color='error'
+                    onClick={deleteHandler}
+                >
+                    Delete
+                </Button> : null}
                 <Button
                     variant='outlined'
                     component={Link}
-                    to={`/album/${props.artistName}/${props.title}/${props.id}`}
+                    to={`/album/${artistName}/${title}/${id}`}
                     size='small'
                 >
                     Tracks
@@ -54,5 +64,16 @@ const AlbumItem = props => (
         </Card>
     </Grid>
 );
+
+AlbumItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    artistName: PropTypes.string.isRequired,
+    release: PropTypes.string.isRequired,
+    tracksCount: PropTypes.number,
+    image: PropTypes.string,
+    user: PropTypes.object,
+    deleteHandler: PropTypes.func,
+};
 
 export default AlbumItem;

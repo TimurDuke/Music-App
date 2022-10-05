@@ -2,8 +2,9 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {Box, Button, Card, CardActions, CardHeader, CardMedia, Grid} from "@mui/material";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import PropTypes from "prop-types";
 
-const ArtistItem = ({name, image, id}) => (
+const ArtistItem = ({name, image, id, user, deleteHandler}) => (
     <Grid item xs={12} sm={4} lg={3}>
         <Card
             sx={{
@@ -35,6 +36,15 @@ const ArtistItem = ({name, image, id}) => (
                     justifyContent: 'flex-end'
                 }}
             >
+                {user?.role === 'admin' ? <Button
+                    sx={{marginRight: '20px'}}
+                    size='small'
+                    variant='outlined'
+                    color='error'
+                    onClick={deleteHandler}
+                >
+                    Delete
+                </Button> : null}
                 <Button
                     size='small'
                     variant='outlined'
@@ -48,5 +58,13 @@ const ArtistItem = ({name, image, id}) => (
         </Card>
     </Grid>
 );
+
+ArtistItem.propTypes = {
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    user: PropTypes.object,
+    image: PropTypes.string,
+    deleteHandler: PropTypes.func,
+};
 
 export default ArtistItem;
