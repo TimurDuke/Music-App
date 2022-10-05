@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getUnpublishArtists} from "../../store/actions/artistsActions";
-import {getUnpublishAlbums} from "../../store/actions/albumsActions";
-import {getUnpublishTracks} from "../../store/actions/tracksActions";
+import {deleteArtist, getUnpublishArtists} from "../../store/actions/artistsActions";
+import {deleteAlbum, getUnpublishAlbums} from "../../store/actions/albumsActions";
+import {deleteTrack, getUnpublishTracks} from "../../store/actions/tracksActions";
 import {Grid, Typography} from "@mui/material";
 import ArtistEntityItem from "../../components/EntitiesItems/ArtistEntityItem/ArtistEntityItem";
 import AlbumEntityItem from "../../components/EntitiesItems/AlbumEntityItem/AlbumEntityItem";
@@ -23,6 +23,18 @@ const UnpublishedEntities = () => {
         dispatch(getUnpublishTracks());
     }, [dispatch]);
 
+    const deleteArtistHandler = artistId => {
+        dispatch(deleteArtist(artistId));
+    };
+
+    const deleteAlbumHandler = albumId => {
+        dispatch(deleteAlbum(albumId));
+    };
+
+    const deleteTrackHandler = trackId => {
+        dispatch(deleteTrack(trackId));
+    };
+
     return (
         <Grid container spacing={2} justifyContent='center'>
 
@@ -38,6 +50,7 @@ const UnpublishedEntities = () => {
                             isPublished={artist.published}
                             image={artist.image}
                             user={user}
+                            deleteHandler={() => deleteArtistHandler(artist._id)}
                         />
                     )) :
                     <Typography variant='h6'>
@@ -47,7 +60,7 @@ const UnpublishedEntities = () => {
             </Grid>
 
             <Grid item xs={12} lg={8}>
-                <Typography variant='h6'>
+                <Typography variant='h4'>
                     Albums
                 </Typography>
                 {!!albums.length ?
@@ -59,6 +72,7 @@ const UnpublishedEntities = () => {
                             title={album.title}
                             image={album.image}
                             user={user}
+                            deleteHandler={() => deleteAlbumHandler(album._id)}
                         />
                     )) :
                     <Typography variant='h6'>
@@ -68,7 +82,7 @@ const UnpublishedEntities = () => {
             </Grid>
 
             <Grid item xs={12} lg={8}>
-                <Typography variant='h6'>
+                <Typography variant='h4'>
                     Tracks
                 </Typography>
                 {!!tracks.length ?
@@ -80,6 +94,7 @@ const UnpublishedEntities = () => {
                             number={track.number}
                             isPublished={track.published}
                             user={user}
+                            deleteHandler={() => deleteTrackHandler(track._id)}
                         />
                     )) : <Typography variant='h6'>
                         There are no unpublished tracks.
