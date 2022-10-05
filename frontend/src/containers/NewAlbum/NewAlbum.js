@@ -4,11 +4,13 @@ import {Typography} from "@mui/material";
 import {getArtists} from "../../store/actions/artistsActions";
 import AlbumForm from "../../components/Forms/AlbumForm/AlbumForm";
 import {createAlbum} from "../../store/actions/albumsActions";
+import Preloader from "../../components/UI/Preloader/Preloader";
 
 const NewArtist = () => {
     const dispatch = useDispatch();
 
     const artists = useSelector(state => state.artists.artists);
+    const artistsLoading = useSelector(state => state.artists.artistsLoading);
     const error = useSelector(state => state.albums.albumsError);
 
     useEffect(() => {
@@ -21,6 +23,9 @@ const NewArtist = () => {
 
     return (
         <>
+            <Preloader
+                showPreloader={artistsLoading}
+            />
             <Typography
                 textAlign="center"
                 marginBottom="20px"

@@ -1,14 +1,14 @@
 import React from 'react';
-import Layout from "./components/UI/Layout/Layout";
+import {useSelector} from "react-redux";
 import {Route, Switch} from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import Layout from "./components/UI/Layout/Layout";
 import Artists from "./containers/Artists/Artists";
 import Albums from "./containers/Albums/Albums";
 import Tracks from "./containers/Tracks/Tracks";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
 import TrackHistory from "./containers/TrackHistory/TrackHistory";
-import {useSelector} from "react-redux";
-import ProtectedRoute from "./ProtectedRoute";
 import NewArtist from "./containers/NewArtist/NewArtist";
 import NewAlbum from "./containers/NewAlbum/NewAlbum";
 import NewTrack from "./containers/NewTrack/NewTrack";
