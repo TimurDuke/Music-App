@@ -67,6 +67,16 @@ router.get('/personal', auth, async (req, res) => {
     }
 });
 
+router.get('/not_publish', auth, permit('admin'), async (req, res) => {
+    try {
+        const albums = await Album.find({published: false});
+
+        res.send(albums);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 

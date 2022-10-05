@@ -106,3 +106,27 @@ export const getPersonalAlbums = () => {
         }
     };
 };
+
+export const GET_UNPUBLISH_ALBUMS_REQUEST = 'GET_UNPUBLISH_ALBUMS_REQUEST';
+export const GET_UNPUBLISH_ALBUMS_SUCCESS = 'GET_UNPUBLISH_ALBUMS_SUCCESS';
+export const GET_UNPUBLISH_ALBUMS_FAILURE = 'GET_UNPUBLISH_ALBUMS_FAILURE';
+
+const getUnpublishAlbumsRequest = () => ({type: GET_UNPUBLISH_ALBUMS_REQUEST});
+const getUnpublishAlbumsSuccess = albums => ({type: GET_UNPUBLISH_ALBUMS_SUCCESS, albums});
+const getUnpublishAlbumsFailure = error => ({type: GET_UNPUBLISH_ALBUMS_FAILURE, error});
+
+export const getUnpublishAlbums = () => {
+    return async dispatch => {
+        try {
+            dispatch(getUnpublishAlbumsRequest());
+
+            const {data} = await axiosApi.get('/albums/not_publish');
+
+            if (data) {
+                dispatch(getUnpublishAlbumsSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getUnpublishAlbumsFailure(e));
+        }
+    };
+};

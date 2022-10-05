@@ -3,11 +3,17 @@ import {
     CLEAR_ALBUMS_REDUCER,
     CREATE_ALBUM_FAILURE,
     CREATE_ALBUM_REQUEST,
-    CREATE_ALBUM_SUCCESS, GET_ALBUMS_BY_ARTIST_FAILURE,
-    GET_ALBUMS_BY_ARTIST_REQUEST, GET_ALBUMS_BY_ARTIST_SUCCESS,
+    CREATE_ALBUM_SUCCESS,
+    GET_ALBUMS_BY_ARTIST_FAILURE,
+    GET_ALBUMS_BY_ARTIST_REQUEST,
+    GET_ALBUMS_BY_ARTIST_SUCCESS,
     GET_ALBUMS_FAILURE,
     GET_ALBUMS_REQUEST,
-    GET_ALBUMS_SUCCESS, GET_PERSONAL_ALBUMS_FAILURE, GET_PERSONAL_ALBUMS_REQUEST, GET_PERSONAL_ALBUMS_SUCCESS,
+    GET_ALBUMS_SUCCESS,
+    GET_PERSONAL_ALBUMS_FAILURE,
+    GET_PERSONAL_ALBUMS_REQUEST,
+    GET_PERSONAL_ALBUMS_SUCCESS, GET_UNPUBLISH_ALBUMS_FAILURE,
+    GET_UNPUBLISH_ALBUMS_REQUEST, GET_UNPUBLISH_ALBUMS_SUCCESS,
 } from "../actions/albumsActions";
 
 const initialState = {
@@ -55,6 +61,13 @@ const reducer = (state = initialState, actions) => {
         case GET_PERSONAL_ALBUMS_SUCCESS:
             return {...state, albumsLoading: false, albumsError: null, albums: actions.albums};
         case GET_PERSONAL_ALBUMS_FAILURE:
+            return {...state, albumsLoading: false, albumsError: null};
+
+        case GET_UNPUBLISH_ALBUMS_REQUEST:
+            return {...state, albumsLoading: true, albumsError: null};
+        case GET_UNPUBLISH_ALBUMS_SUCCESS:
+            return {...state, albumsLoading: false, albumsError: null, albums: actions.albums};
+        case GET_UNPUBLISH_ALBUMS_FAILURE:
             return {...state, albumsLoading: false, albumsError: null};
 
         default:
