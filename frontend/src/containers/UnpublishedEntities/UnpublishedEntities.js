@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteArtist, getUnpublishArtists} from "../../store/actions/artistsActions";
-import {deleteAlbum, getUnpublishAlbums} from "../../store/actions/albumsActions";
-import {deleteTrack, getUnpublishTracks} from "../../store/actions/tracksActions";
+import {deleteArtist, getUnpublishArtists, makeArtistPublic} from "../../store/actions/artistsActions";
+import {deleteAlbum, getUnpublishAlbums, makeAlbumPublic} from "../../store/actions/albumsActions";
+import {deleteTrack, getUnpublishTracks, makeTrackPublic} from "../../store/actions/tracksActions";
 import {Grid, Typography} from "@mui/material";
 import ArtistEntityItem from "../../components/EntitiesItems/ArtistEntityItem/ArtistEntityItem";
 import AlbumEntityItem from "../../components/EntitiesItems/AlbumEntityItem/AlbumEntityItem";
@@ -35,6 +35,18 @@ const UnpublishedEntities = () => {
         dispatch(deleteTrack(trackId));
     };
 
+    const makeArtistPublicHandler = artistId => {
+        dispatch(makeArtistPublic(artistId));
+    };
+
+    const makeAlbumPublicHandler = albumId => {
+        dispatch(makeAlbumPublic(albumId));
+    };
+
+    const makeTrackPublicHandler = trackId => {
+        dispatch(makeTrackPublic(trackId));
+    };
+
     return (
         <Grid container spacing={2} justifyContent='center'>
 
@@ -51,6 +63,7 @@ const UnpublishedEntities = () => {
                             image={artist.image}
                             user={user}
                             deleteHandler={() => deleteArtistHandler(artist._id)}
+                            publishHandler={() => makeArtistPublicHandler(artist._id)}
                         />
                     )) :
                     <Typography variant='h6'>
@@ -73,6 +86,7 @@ const UnpublishedEntities = () => {
                             image={album.image}
                             user={user}
                             deleteHandler={() => deleteAlbumHandler(album._id)}
+                            publishHandler={() => makeAlbumPublicHandler(album._id)}
                         />
                     )) :
                     <Typography variant='h6'>
@@ -95,6 +109,7 @@ const UnpublishedEntities = () => {
                             isPublished={track.published}
                             user={user}
                             deleteHandler={() => deleteTrackHandler(track._id)}
+                            publishHandler={() => makeTrackPublicHandler(track._id)}
                         />
                     )) : <Typography variant='h6'>
                         There are no unpublished tracks.
