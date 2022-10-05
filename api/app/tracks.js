@@ -63,7 +63,7 @@ router.get('/not_publish', auth, permit('admin'), async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const { title, artist, album, duration, number, youtube } = req.body;
 
