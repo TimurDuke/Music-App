@@ -6,7 +6,7 @@ import {apiUrl} from "../../config";
 import AlbumItem from "../../components/Items/AlbumItem/AlbumItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {changeArtistName, clearArtistsReducer} from "../../store/actions/artistsActions";
-import {clearAlbumsReducer, getAlbums} from "../../store/actions/albumsActions";
+import {clearAlbumsReducer, deleteAlbum, getAlbums} from "../../store/actions/albumsActions";
 
 const Albums = ({match}) => {
     const dispatch = useDispatch();
@@ -30,6 +30,10 @@ const Albums = ({match}) => {
         // eslint-disable-next-line
     }, [dispatch, match.params.id]);
 
+    const deleteAlbumHandler = albumId => {
+        dispatch(deleteAlbum(albumId));
+    };
+
     return (
         <>
             <Preloader
@@ -51,6 +55,7 @@ const Albums = ({match}) => {
                         artistName={album.artist.name}
                         image={album.image ? apiUrl + '/' + album.image : null}
                         user={user}
+                        deleteHandler={() => deleteAlbumHandler(album._id)}
                     /> : null
                 ))}
             </Grid> : <h2 style={{textAlign: 'center'}}>This artist has no albums.</h2>}

@@ -19,7 +19,7 @@ const TrackItem = ({number, title, duration, playHandler, isDisabled, video, use
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography>№{number} <strong>{title}</strong></Typography>
+                <Typography sx={{marginRight: '15px'}}>№{number} <strong>{title}</strong></Typography>
                 {user?.role === 'admin' ?
                     <DeleteButton deleteHandler={deleteHandler}/>
                     : null}

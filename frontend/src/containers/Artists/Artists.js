@@ -5,7 +5,7 @@ import {Grid} from "@mui/material";
 import {apiUrl} from "../../config";
 import ArtistItem from "../../components/Items/ArtistItem/ArtistItem";
 import Preloader from "../../components/UI/Preloader/Preloader";
-import {getArtists} from "../../store/actions/artistsActions";
+import {deleteArtist, getArtists} from "../../store/actions/artistsActions";
 
 const Artists = () => {
     const dispatch = useDispatch();
@@ -17,6 +17,11 @@ const Artists = () => {
     useEffect(() => {
         dispatch(getArtists());
     }, [dispatch]);
+
+    const deleteArtistHandler = async artistId => {
+        await dispatch(deleteArtist(artistId));
+        await dispatch(getArtists());
+    };
 
     return (
         <>
@@ -32,6 +37,7 @@ const Artists = () => {
                             name={artist.name}
                             image={artist.image ? apiUrl + '/' + artist.image : null}
                             user={user}
+                            deleteHandler={() => deleteArtistHandler(artist._id)}
                         /> : null
                 )) : null}
             </Grid>

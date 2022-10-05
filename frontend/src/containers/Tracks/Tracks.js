@@ -8,7 +8,7 @@ import {Redirect} from "react-router-dom";
 import {createHistory} from "../../store/actions/tracksHistoryActions";
 import {changeAlbumTitle, clearAlbumsReducer} from "../../store/actions/albumsActions";
 import {changeArtistName, clearArtistsReducer} from "../../store/actions/artistsActions";
-import {clearTracksReducer, getTracks} from "../../store/actions/tracksActions";
+import {clearTracksReducer, deleteTrack, getTracks} from "../../store/actions/tracksActions";
 
 const Tracks = ({match}) => {
     const dispatch = useDispatch();
@@ -49,6 +49,10 @@ const Tracks = ({match}) => {
         dispatch(createHistory(trackId, title));
     };
 
+    const deleteTrackHandler = trackId => {
+        dispatch(deleteTrack(trackId));
+    };
+
     return (
         <>
             <Preloader
@@ -82,6 +86,7 @@ const Tracks = ({match}) => {
                         playHandler={() => playMusicHandler(track['_id'], track.title)}
                         isDisabled={createHistoryLoading}
                         user={user}
+                        deleteHandler={() => deleteTrackHandler(track._id)}
                     /> : null
                 )) : <h2 style={{textAlign: 'center'}}>This album has no tracks.</h2>}
             </Box>
