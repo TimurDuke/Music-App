@@ -82,3 +82,27 @@ export const getAlbumsByArtist = artistId => {
         }
     };
 };
+
+export const GET_PERSONAL_ALBUMS_REQUEST = 'GET_PERSONAL_ALBUMS_REQUEST';
+export const GET_PERSONAL_ALBUMS_SUCCESS = 'GET_PERSONAL_ALBUMS_SUCCESS';
+export const GET_PERSONAL_ALBUMS_FAILURE = 'GET_PERSONAL_ALBUMS_FAILURE';
+
+const getPersonalAlbumsRequest = () => ({type: GET_PERSONAL_ALBUMS_REQUEST});
+const getPersonalAlbumsSuccess = albums => ({type: GET_PERSONAL_ALBUMS_SUCCESS, albums});
+const getPersonalAlbumsFailure = error => ({type: GET_PERSONAL_ALBUMS_FAILURE, error});
+
+export const getPersonalAlbums = () => {
+    return async dispatch => {
+        try {
+            dispatch(getPersonalAlbumsRequest());
+
+            const {data} = await axiosApi.get('/albums/personal');
+
+            if (data) {
+                dispatch(getPersonalAlbumsSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getPersonalAlbumsFailure(e));
+        }
+    };
+};

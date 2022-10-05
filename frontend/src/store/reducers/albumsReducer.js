@@ -7,7 +7,7 @@ import {
     GET_ALBUMS_BY_ARTIST_REQUEST, GET_ALBUMS_BY_ARTIST_SUCCESS,
     GET_ALBUMS_FAILURE,
     GET_ALBUMS_REQUEST,
-    GET_ALBUMS_SUCCESS,
+    GET_ALBUMS_SUCCESS, GET_PERSONAL_ALBUMS_FAILURE, GET_PERSONAL_ALBUMS_REQUEST, GET_PERSONAL_ALBUMS_SUCCESS,
 } from "../actions/albumsActions";
 
 const initialState = {
@@ -49,6 +49,13 @@ const reducer = (state = initialState, actions) => {
             return {...state, albumsLoading: false, albumsError: null, albums: actions.albums};
         case GET_ALBUMS_BY_ARTIST_FAILURE:
             return {...state, albumsLoading: false, albumsError: actions.error};
+
+        case GET_PERSONAL_ALBUMS_REQUEST:
+            return {...state, albumsLoading: true, albumsError: null};
+        case GET_PERSONAL_ALBUMS_SUCCESS:
+            return {...state, albumsLoading: false, albumsError: null, albums: actions.albums};
+        case GET_PERSONAL_ALBUMS_FAILURE:
+            return {...state, albumsLoading: false, albumsError: null};
 
         default:
             return state;
