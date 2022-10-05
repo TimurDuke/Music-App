@@ -34,11 +34,13 @@ const run = async () => {
         information: "Timur is artist",
         image: "fixtures/dog.jpg",
         published: true,
+        user: user1['_id'],
     }, {
         name: "Serkhan",
         information: "Serkhan is artist",
         image: "fixtures/sad.jpg",
         published: true,
+        user: user2['_id'],
     });
 
     const [albumTimur, albumSerkhan1] = await Album.create({
@@ -47,16 +49,19 @@ const run = async () => {
         release: "2022-09-28T09:43:14.374Z",
         image: "fixtures/dog.jpg",
         published: true,
+        user: user1['_id'],
     }, {
         title: "Tracks 1 by Serkhan",
         artist: artist2['_id'],
         release: "2022-07-28T09:43:14.374Z",
         published: true,
+        user: user2['_id'],
     }, {
         title: "Tracks 2 by Serkhan",
         artist: artist2['_id'],
         release: "2022-08-28T09:43:14.374Z",
         published: false,
+        user: user2['_id'],
     });
 
     const [trackTimur1, trackSerkhan1] = await Track.create({
@@ -67,6 +72,7 @@ const run = async () => {
         number: 1,
         youtube: "hUTItsO2dfw",
         published: true,
+        user: user1['_id'],
     }, {
         title: "Track Serkhan 1",
         artist: artist2['_id'],
@@ -75,6 +81,7 @@ const run = async () => {
         number: 1,
         youtube: "f2fupOTYgUI",
         published: true,
+        user: user2['_id'],
     }, {
         title: "Track Serkhan 2",
         artist: artist2['_id'],
@@ -82,6 +89,7 @@ const run = async () => {
         duration: "4:15",
         number: 2,
         published: false,
+        user: user2['_id'],
     }, {
         title: "Track Timur 2",
         artist: artist1['_id'],
@@ -89,6 +97,7 @@ const run = async () => {
         duration: "3:25",
         number: 2,
         published: false,
+        user: user1['_id'],
     });
 
     await TrackHistory.create({
