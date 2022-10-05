@@ -70,7 +70,7 @@ const run = async () => {
         album: albumTimur['_id'],
         duration: "2:12",
         number: 1,
-        youtube: "hUTItsO2dfw",
+        youtube: "https://www.youtube.com/watch?v=hUTItsO2dfw",
         published: true,
         user: user1['_id'],
     }, {
@@ -79,7 +79,7 @@ const run = async () => {
         album: albumSerkhan1['_id'],
         duration: "1:45",
         number: 1,
-        youtube: "f2fupOTYgUI",
+        youtube: "https://www.youtube.com/watch?v=f2fupOTYgUI",
         published: true,
         user: user2['_id'],
     }, {

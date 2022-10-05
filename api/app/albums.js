@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', async (req, res) => {
-    const {artist} = req.query;
+    const { artist } = req.query;
 
     if (artist) {
         try {
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
     if (!artist) {
         try {
             const artists = await Album
-                .find()
+                .find({published: true})
                 .populate('artist', 'name');
 
             res.send(artists);
@@ -57,8 +57,18 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/personal', auth, async (req, res) => {
+    try {
+        const albums = await Album.find({user: req.user._id});
+
+        res.send(albums);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.get('/:id', async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
     try {
         const album = await Album.findById(id);
@@ -69,15 +79,21 @@ router.get('/:id', async (req, res) => {
 
         res.send(album);
     } catch {
-        res.status(404).send({error: "There is no album with this id."});
+        res.sendStatus(500);
     }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', auth, upload.single('image'), async (req, res) => {
     try {
-        const {title, artist} = req.body;
+        const { title, artist } = req.body;
 
-        const albumData = {title, release: new Date().toISOString(), artist, image: null};
+        const albumData = {
+            title,
+            user: req.user._id,
+            release: new Date().toISOString(),
+            artist,
+            image: null
+        };
 
         if (req.file) {
             albumData.image = 'uploads/' + req.file.filename;

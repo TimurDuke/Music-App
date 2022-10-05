@@ -7,12 +7,12 @@ const permit = require("../middleware/permit");
 const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
-    const {album, artist} = req.query;
+    const { album, artist } = req.query;
 
     if (album) {
         try {
             const tracks = await Track
-                .find({album})
+                .find({album, published: true})
                 .sort({number: 1})
                 .populate({path: 'album', select: 'title', populate: {path: "artist", select: 'name'}});
 
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
         }
     } else if (artist) {
         try {
-            const tracks = await Track.find({artist});
+            const tracks = await Track.find({artist, published: true});
 
             res.send(tracks);
         } catch (e) {
@@ -33,7 +33,7 @@ router.get('/', auth, async (req, res) => {
     if (!album && !artist) {
         try {
             const tracks = await Track
-                .find()
+                .find({published: true})
                 .populate('album', 'title');
 
             res.send(tracks);
@@ -43,9 +43,19 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+router.get('/personal', auth, async (req, res) => {
+    try {
+        const tracks = await Track.find({user: req.user._id});
+
+        res.send(tracks);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
-        const {title, artist, album, duration, number, youtube} = req.body;
+        const { title, artist, album, duration, number, youtube } = req.body;
 
         const checkNumber = await Track.findOne({number, album});
 
@@ -53,6 +63,7 @@ router.post('/', async (req, res) => {
 
         const trackData = {
             title,
+            user: req.user._id,
             artist,
             album,
             duration,

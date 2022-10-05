@@ -23,7 +23,7 @@ const upload = multer({storage});
 
 router.get('/', async (req, res) => {
     try {
-        const artists = await Artist.find();
+        const artists = await Artist.find({published: true});
 
         res.send(artists);
     } catch {
@@ -31,12 +31,23 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.get('/personal', auth, async (req, res) => {
     try {
-        const {name, information} = req.body;
+        const artists = await Artist.find({user: req.user._id});
+
+        res.send(artists);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
+router.post('/', auth, upload.single('image'), async (req, res) => {
+    try {
+        const { name, information } = req.body;
 
         const artistData = {
             name,
+            user: req.user._id,
             information: information || null,
             image: null,
         };
