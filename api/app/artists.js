@@ -76,6 +76,28 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
     }
 });
 
+router.put('/:id/publish', auth, permit('admin'), async (req, res) => {
+    const artistId = req.params.id;
+
+    try {
+        const artist = await Artist.findById(artistId);
+
+        if (!artist) {
+            return res.status(404).send({error: "Artist not found!"});
+        }
+
+        if (artist.published) {
+            return res.status(400).send({message: "The artist has already been published."});
+        }
+
+        await Artist.findByIdAndUpdate(artistId, {published: true});
+
+        res.send({message: "The artist has been successfully published."});
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     try {
         const artist = await Artist.findById(req.params.id);
@@ -86,7 +108,7 @@ router.delete('/:id', auth, permit('admin'), async (req, res) => {
 
         await Artist.findByIdAndDelete(artist['_id']);
 
-        res.send({message: "Artist deleted."});
+        res.send({message: "The artist has been successfully removed."});
     } catch (e) {
         res.sendStatus(500);
     }

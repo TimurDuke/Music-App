@@ -119,6 +119,28 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
     }
 });
 
+router.put('/:id/publish', auth, permit('admin'), async (req, res) => {
+    const albumId = req.params.id;
+
+    try {
+        const album = await Album.findById(albumId);
+
+        if (!album) {
+            return res.status(404).send({error: "Album not found!"});
+        }
+
+        if (album.published) {
+            return res.status(400).send({message: "The album has already been published."});
+        }
+
+        await Album.findByIdAndUpdate(albumId, {published: true});
+
+        res.send({message: "The album has been successfully published."});
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     try {
         const album = await Album.findById(req.params.id);
@@ -129,7 +151,7 @@ router.delete('/:id', auth, permit('admin'), async (req, res) => {
 
         await Album.findByIdAndDelete(album['_id']);
 
-        res.send({message: "Album deleted."});
+        res.send({message: "The album has been successfully removed."});
     } catch (e) {
         res.sendStatus(500);
     }

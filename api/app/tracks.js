@@ -91,6 +91,29 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/:id/publish', auth, permit('admin'), async (req, res) => {
+    const trackId = req.params.id;
+
+    try {
+        const track = await Track.findById(trackId);
+
+        if (!track) {
+            return res.status(404).send({error: "Track not found!"});
+        }
+
+        if (track.published) {
+            return res.status(400).send({message: "The track has already been published."});
+        }
+
+        await Track.findByIdAndUpdate(trackId, {published: true});
+
+        res.send({message: "The track has been successfully published."});
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
+
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     try {
         const track = await Track.findById(req.params.id);
@@ -101,7 +124,7 @@ router.delete('/:id', auth, permit('admin'), async (req, res) => {
 
         await Track.findByIdAndDelete(track['_id']);
 
-        res.send({message: "Track deleted."});
+        res.send({message: "The track has been successfully removed."});
     } catch (e) {
         res.sendStatus(500);
     }
