@@ -156,3 +156,29 @@ export const deleteAlbum = albumId => {
         }
     };
 };
+
+export const MAKE_ALBUM_PUBLIC_REQUEST = 'MAKE_ALBUM_PUBLIC_REQUEST';
+export const MAKE_ALBUM_PUBLIC_SUCCESS = 'MAKE_ALBUM_PUBLIC_SUCCESS';
+export const MAKE_ALBUM_PUBLIC_FAILURE = 'MAKE_ALBUM_PUBLIC_FAILURE';
+
+const makeAlbumPublicRequest = () => ({type: MAKE_ALBUM_PUBLIC_REQUEST});
+const makeAlbumPublicSuccess = () => ({type: MAKE_ALBUM_PUBLIC_SUCCESS});
+const makeAlbumPublicFailure = error => ({type: MAKE_ALBUM_PUBLIC_FAILURE, error});
+
+export const makeAlbumPublic = albumId => {
+    return async dispatch => {
+        try {
+            dispatch(makeAlbumPublicRequest());
+
+            const {data} = await axiosApi.put('/albums/' + albumId + '/publish');
+
+            if (data) {
+                dispatch(makeAlbumPublicSuccess());
+                useToastSuccess(data.message);
+                dispatch(historyPush('/'));
+            }
+        } catch (e) {
+            dispatch(makeAlbumPublicFailure(e));
+        }
+    };
+};
