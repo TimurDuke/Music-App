@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
-import {useToastInfo} from "../../hooks";
+import {useToastInfo, useToastSuccess} from "../../hooks";
 
 export const CHANGE_ALBUM_TITLE = 'CHANGE_ALBUM_TITLE';
 export const changeAlbumTitle = title => ({type: CHANGE_ALBUM_TITLE, title});
@@ -127,6 +127,32 @@ export const getUnpublishAlbums = () => {
             }
         } catch (e) {
             dispatch(getUnpublishAlbumsFailure(e));
+        }
+    };
+};
+
+export const DELETE_ALBUM_REQUEST = 'DELETE_ALBUM_REQUEST';
+export const DELETE_ALBUM_SUCCESS = 'DELETE_ALBUM_SUCCESS';
+export const DELETE_ALBUM_FAILURE = 'DELETE_ALBUM_FAILURE';
+
+const deleteAlbumRequest = () => ({type: DELETE_ALBUM_REQUEST});
+const deleteAlbumSuccess = () => ({type: DELETE_ALBUM_SUCCESS});
+const deleteAlbumFailure = error => ({type: DELETE_ALBUM_FAILURE, error});
+
+export const deleteAlbum = albumId => {
+    return async dispatch => {
+        try {
+            dispatch(deleteAlbumRequest());
+
+            const {data} = await axiosApi.delete('/albums/' + albumId);
+
+            if (data) {
+                dispatch(deleteAlbumSuccess());
+                useToastSuccess(data.message);
+                dispatch(historyPush('/'));
+            }
+        } catch (e) {
+            dispatch(deleteAlbumFailure(e));
         }
     };
 };

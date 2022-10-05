@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
-import {useToastInfo} from "../../hooks";
+import {useToastInfo, useToastSuccess} from "../../hooks";
 
 export const CHANGE_ARTIST_NAME = 'CHANGE_ARTIST_NAME';
 export const changeArtistName = name => ({type: CHANGE_ARTIST_NAME, name});
@@ -102,6 +102,32 @@ export const getUnpublishArtists = () => {
             }
         } catch (e) {
             dispatch(getUnpublishArtistsFailure(e));
+        }
+    };
+};
+
+export const DELETE_ARTIST_REQUEST = 'DELETE_ARTIST_REQUEST';
+export const DELETE_ARTIST_SUCCESS = 'DELETE_ARTIST_SUCCESS';
+export const DELETE_ARTIST_FAILURE = 'DELETE_ARTIST_FAILURE';
+
+const deleteArtistRequest = () => ({type: DELETE_ARTIST_REQUEST});
+const deleteArtistSuccess = () => ({type: DELETE_ARTIST_SUCCESS});
+const deleteArtistFailure = error => ({type: DELETE_ARTIST_FAILURE, error});
+
+export const deleteArtist = artistId => {
+    return async dispatch => {
+        try {
+            dispatch(deleteArtistRequest());
+
+            const {data} = await axiosApi.delete('/artists/' + artistId);
+
+            if (data) {
+                dispatch(deleteArtistSuccess());
+                useToastSuccess(data.message);
+                dispatch(historyPush('/'));
+            }
+        } catch (e) {
+            dispatch(deleteArtistFailure(e));
         }
     };
 };

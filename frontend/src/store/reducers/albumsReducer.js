@@ -3,7 +3,7 @@ import {
     CLEAR_ALBUMS_REDUCER,
     CREATE_ALBUM_FAILURE,
     CREATE_ALBUM_REQUEST,
-    CREATE_ALBUM_SUCCESS,
+    CREATE_ALBUM_SUCCESS, DELETE_ALBUM_FAILURE, DELETE_ALBUM_REQUEST, DELETE_ALBUM_SUCCESS,
     GET_ALBUMS_BY_ARTIST_FAILURE,
     GET_ALBUMS_BY_ARTIST_REQUEST,
     GET_ALBUMS_BY_ARTIST_SUCCESS,
@@ -69,6 +69,13 @@ const reducer = (state = initialState, actions) => {
             return {...state, albumsLoading: false, albumsError: null, albums: actions.albums};
         case GET_UNPUBLISH_ALBUMS_FAILURE:
             return {...state, albumsLoading: false, albumsError: null};
+
+        case DELETE_ALBUM_REQUEST:
+            return {...state, albumsLoading: true, albumsError: null};
+        case DELETE_ALBUM_SUCCESS:
+            return {...state, albumsLoading: false, albumsError: null};
+        case DELETE_ALBUM_FAILURE:
+            return {...state, albumsLoading: false, albumsError: actions.error};
 
         default:
             return state;

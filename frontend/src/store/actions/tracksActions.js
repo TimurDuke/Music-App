@@ -1,4 +1,4 @@
-import {useToastError, useToastInfo, useToastWarn} from "../../hooks";
+import {useToastError, useToastInfo, useToastSuccess, useToastWarn} from "../../hooks";
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
 
@@ -113,6 +113,32 @@ export const getUnpublishTracks = () => {
             }
         } catch (e) {
             dispatch(getUnpublishTracksFailure(e));
+        }
+    };
+};
+
+export const DELETE_TRACK_REQUEST = 'DELETE_TRACK_REQUEST';
+export const DELETE_TRACK_SUCCESS = 'DELETE_TRACK_SUCCESS';
+export const DELETE_TRACK_FAILURE = 'DELETE_TRACK_FAILURE';
+
+const deleteTrackRequest = () => ({type: DELETE_TRACK_REQUEST});
+const deleteTrackSuccess = () => ({type: DELETE_TRACK_SUCCESS});
+const deleteTrackFailure = error => ({type: DELETE_TRACK_FAILURE, error});
+
+export const deleteTrack = trackId => {
+    return async dispatch => {
+        try {
+            dispatch(deleteTrackRequest());
+
+            const {data} = await axiosApi.delete('/tracks/' + trackId);
+
+            if (data) {
+                dispatch(deleteTrackSuccess());
+                useToastSuccess(data.message);
+                dispatch(historyPush('/'));
+            }
+        } catch (e) {
+            dispatch(deleteTrackFailure(e));
         }
     };
 };

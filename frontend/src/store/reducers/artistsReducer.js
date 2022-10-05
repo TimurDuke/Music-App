@@ -3,7 +3,7 @@ import {
     CLEAR_ARTISTS_REDUCER,
     CREATE_ARTIST_FAILURE,
     CREATE_ARTIST_REQUEST,
-    CREATE_ARTIST_SUCCESS,
+    CREATE_ARTIST_SUCCESS, DELETE_ARTIST_FAILURE, DELETE_ARTIST_REQUEST, DELETE_ARTIST_SUCCESS,
     GET_ARTISTS_FAILURE,
     GET_ARTISTS_REQUEST,
     GET_ARTISTS_SUCCESS,
@@ -56,6 +56,13 @@ const reducer = (state = initialState, actions) => {
             return {...state, artistsLoading: false, artistsError: null, artists: actions.artists};
         case GET_UNPUBLISH_ARTISTS_FAILURE:
             return {...state, artistsLoading: false, artistsError: null};
+
+        case DELETE_ARTIST_REQUEST:
+            return {...state, artistsLoading: true, artistsError: null};
+        case DELETE_ARTIST_SUCCESS:
+            return {...state, artistsLoading: false, artistsError: null};
+        case DELETE_ARTIST_FAILURE:
+            return {...state, artistsLoading: false, artistsError: actions.error};
 
         default:
             return state;
