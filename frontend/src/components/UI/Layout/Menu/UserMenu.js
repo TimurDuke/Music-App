@@ -37,6 +37,17 @@ const UserMenu = ({user}) => {
                     color='inherit'
                     sx={{marginRight: "20px"}}
                     variant='outlined'
+                    size='small'
+                    component={Link}
+                    to='/entities'
+                >
+                    My entities
+                </Button>
+                <Button
+                    color='inherit'
+                    sx={{marginRight: "20px"}}
+                    variant='outlined'
+                    size='small'
                     component={Link}
                     to='/track_history'
                 >
