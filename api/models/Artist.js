@@ -1,7 +1,12 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const ArtistSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     name: {
         type: String,
         maxLength: 255,
