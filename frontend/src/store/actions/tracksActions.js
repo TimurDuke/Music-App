@@ -68,3 +68,27 @@ export const createTrack = trackData => {
         }
     };
 };
+
+export const GET_PERSONAL_TRACKS_REQUEST = 'GET_PERSONAL_TRACKS_REQUEST';
+export const GET_PERSONAL_TRACKS_SUCCESS = 'GET_PERSONAL_TRACKS_SUCCESS';
+export const GET_PERSONAL_TRACKS_FAILURE = 'GET_PERSONAL_TRACKS_FAILURE';
+
+const getPersonalTracksRequest = () => ({type: GET_PERSONAL_TRACKS_REQUEST});
+const getPersonalTracksSuccess = tracks => ({type: GET_PERSONAL_TRACKS_SUCCESS, tracks});
+const getPersonalTracksFailure = error => ({type: GET_PERSONAL_TRACKS_FAILURE, error});
+
+export const getPersonalTracks = () => {
+    return async dispatch => {
+        try {
+            dispatch(getPersonalTracksRequest());
+
+            const {data} = await axiosApi.get('/tracks/personal');
+
+            if (data) {
+                dispatch(getPersonalTracksSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getPersonalTracksFailure(e));
+        }
+    };
+};

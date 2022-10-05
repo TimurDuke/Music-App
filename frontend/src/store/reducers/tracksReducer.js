@@ -1,5 +1,10 @@
 import {
-    CLEAR_TRACKS_REDUCER, CREATE_TRACK_FAILURE, CREATE_TRACK_REQUEST, CREATE_TRACK_SUCCESS,
+    CLEAR_TRACKS_REDUCER,
+    CREATE_TRACK_FAILURE,
+    CREATE_TRACK_REQUEST,
+    CREATE_TRACK_SUCCESS, GET_PERSONAL_TRACKS_FAILURE,
+    GET_PERSONAL_TRACKS_REQUEST,
+    GET_PERSONAL_TRACKS_SUCCESS,
     GET_TRACKS_FAILURE,
     GET_TRACKS_REQUEST,
     GET_TRACKS_SUCCESS,
@@ -34,6 +39,13 @@ const reducer = (state = initialState, actions) => {
             return {...state, tracksLoading: false, tracksError: null};
         case CREATE_TRACK_FAILURE:
             return {...state, tracksLoading: false, tracksError: actions.error};
+
+        case GET_PERSONAL_TRACKS_REQUEST:
+            return {...state, tracksLoading: true, tracksError: null};
+        case GET_PERSONAL_TRACKS_SUCCESS:
+            return {...state, tracksLoading: false, tracksError: null, tracks: actions.tracks};
+        case GET_PERSONAL_TRACKS_FAILURE:
+            return {...state, tracksLoading: false, tracksError: null};
 
         default:
             return state;
