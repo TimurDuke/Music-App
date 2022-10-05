@@ -10,6 +10,9 @@ import {
     GET_PERSONAL_ARTISTS_FAILURE,
     GET_PERSONAL_ARTISTS_REQUEST,
     GET_PERSONAL_ARTISTS_SUCCESS,
+    GET_UNPUBLISH_ARTISTS_FAILURE,
+    GET_UNPUBLISH_ARTISTS_REQUEST,
+    GET_UNPUBLISH_ARTISTS_SUCCESS,
 } from "../actions/artistsActions";
 
 const initialState = {
@@ -45,6 +48,13 @@ const reducer = (state = initialState, actions) => {
         case GET_PERSONAL_ARTISTS_SUCCESS:
             return {...state, artistsLoading: false, artistsError: null, artists: actions.artists};
         case GET_PERSONAL_ARTISTS_FAILURE:
+            return {...state, artistsLoading: false, artistsError: null};
+
+        case GET_UNPUBLISH_ARTISTS_REQUEST:
+            return {...state, artistsLoading: true, artistsError: null};
+        case GET_UNPUBLISH_ARTISTS_SUCCESS:
+            return {...state, artistsLoading: false, artistsError: null, artists: actions.artists};
+        case GET_UNPUBLISH_ARTISTS_FAILURE:
             return {...state, artistsLoading: false, artistsError: null};
 
         default:

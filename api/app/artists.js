@@ -41,6 +41,16 @@ router.get('/personal', auth, async (req, res) => {
     }
 });
 
+router.get('/not_publish', auth, permit('admin'), async (req, res) => {
+    try {
+        const artists = await Artist.find({published: false});
+
+        res.send(artists);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.post('/', auth, upload.single('image'), async (req, res) => {
     try {
         const { name, information } = req.body;

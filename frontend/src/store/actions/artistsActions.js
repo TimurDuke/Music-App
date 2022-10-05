@@ -81,3 +81,27 @@ export const getPersonalArtists = () => {
         }
     };
 };
+
+export const GET_UNPUBLISH_ARTISTS_REQUEST = 'GET_UNPUBLISH_ARTISTS_REQUEST';
+export const GET_UNPUBLISH_ARTISTS_SUCCESS = 'GET_UNPUBLISH_ARTISTS_SUCCESS';
+export const GET_UNPUBLISH_ARTISTS_FAILURE = 'GET_UNPUBLISH_ARTISTS_FAILURE';
+
+const getUnpublishArtistsRequest = () => ({type: GET_UNPUBLISH_ARTISTS_REQUEST});
+const getUnpublishArtistsSuccess = artists => ({type: GET_UNPUBLISH_ARTISTS_SUCCESS, artists});
+const getUnpublishArtistsFailure = error => ({type: GET_UNPUBLISH_ARTISTS_FAILURE, error});
+
+export const getUnpublishArtists = () => {
+    return async dispatch => {
+        try {
+            dispatch(getUnpublishArtistsRequest());
+
+            const {data} = await axiosApi.get('/artists/not_publish');
+
+            if (data) {
+                dispatch(getUnpublishArtistsSuccess(data));
+            }
+        } catch (e) {
+            dispatch(getUnpublishArtistsFailure(e));
+        }
+    };
+};
