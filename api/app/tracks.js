@@ -7,7 +7,7 @@ const permit = require("../middleware/permit");
 const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
-    const { album, artist } = req.query;
+    const {album, artist} = req.query;
 
     if (album) {
         try {
@@ -44,26 +44,29 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { title, album, duration, number, youtube } = req.body;
-
-    if (!title || !album || !duration || !number) {
-        return res.status(400).send({error: 'Data not valid'});
-    }
-
-    const checkNumber = await Track.findOne({number, album});
-
-    if (checkNumber) return res.status(400).send({error: "Track with this number already having"});
-
-    const trackData = {title, album, duration, number, youtube};
-
-    const track = new Track(trackData);
-
     try {
+        const {title, artist, album, duration, number, youtube} = req.body;
+
+        const checkNumber = await Track.findOne({number, album});
+
+        if (checkNumber) return res.status(400).send({errors: {number: {message: "Track with this number already having."}}});
+
+        const trackData = {
+            title,
+            artist,
+            album,
+            duration,
+            number,
+            youtube: youtube || null
+        };
+
+        const track = new Track(trackData);
+
         await track.save();
 
         res.send(track);
     } catch (e) {
-        res.status(400).send(e.message);
+        res.status(400).send(e);
     }
 });
 
