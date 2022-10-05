@@ -2,12 +2,20 @@ import {
     CLEAR_TRACKS_REDUCER,
     CREATE_TRACK_FAILURE,
     CREATE_TRACK_REQUEST,
-    CREATE_TRACK_SUCCESS, DELETE_TRACK_FAILURE, DELETE_TRACK_REQUEST, DELETE_TRACK_SUCCESS, GET_PERSONAL_TRACKS_FAILURE,
+    CREATE_TRACK_SUCCESS,
+    DELETE_TRACK_FAILURE,
+    DELETE_TRACK_REQUEST,
+    DELETE_TRACK_SUCCESS,
+    GET_PERSONAL_TRACKS_FAILURE,
     GET_PERSONAL_TRACKS_REQUEST,
     GET_PERSONAL_TRACKS_SUCCESS,
     GET_TRACKS_FAILURE,
     GET_TRACKS_REQUEST,
-    GET_TRACKS_SUCCESS, GET_UNPUBLISH_TRACKS_FAILURE, GET_UNPUBLISH_TRACKS_REQUEST, GET_UNPUBLISH_TRACKS_SUCCESS,
+    GET_TRACKS_SUCCESS,
+    GET_UNPUBLISH_TRACKS_FAILURE,
+    GET_UNPUBLISH_TRACKS_REQUEST,
+    GET_UNPUBLISH_TRACKS_SUCCESS, MAKE_TRACK_PUBLIC_FAILURE,
+    MAKE_TRACK_PUBLIC_REQUEST, MAKE_TRACK_PUBLIC_SUCCESS,
 } from "../actions/tracksActions";
 
 const initialState = {
@@ -59,6 +67,13 @@ const reducer = (state = initialState, actions) => {
         case DELETE_TRACK_SUCCESS:
             return {...state, tracksLoading: false, tracksError: null};
         case DELETE_TRACK_FAILURE:
+            return {...state, tracksLoading: false, tracksError: actions.error};
+
+        case MAKE_TRACK_PUBLIC_REQUEST:
+            return {...state, tracksLoading: true, tracksError: null};
+        case MAKE_TRACK_PUBLIC_SUCCESS:
+            return {...state, tracksLoading: false, tracksError: null};
+        case MAKE_TRACK_PUBLIC_FAILURE:
             return {...state, tracksLoading: false, tracksError: actions.error};
         default:
             return state;

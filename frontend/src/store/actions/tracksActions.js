@@ -142,3 +142,29 @@ export const deleteTrack = trackId => {
         }
     };
 };
+
+export const MAKE_TRACK_PUBLIC_REQUEST = 'MAKE_TRACK_PUBLIC_REQUEST';
+export const MAKE_TRACK_PUBLIC_SUCCESS = 'MAKE_TRACK_PUBLIC_SUCCESS';
+export const MAKE_TRACK_PUBLIC_FAILURE = 'MAKE_TRACK_PUBLIC_FAILURE';
+
+const makeTrackPublicRequest = () => ({type: MAKE_TRACK_PUBLIC_REQUEST});
+const makeTrackPublicSuccess = () => ({type: MAKE_TRACK_PUBLIC_SUCCESS});
+const makeTrackPublicFailure = error => ({type: MAKE_TRACK_PUBLIC_FAILURE, error});
+
+export const makeTrackPublic = trackId => {
+    return async dispatch => {
+        try {
+            dispatch(makeTrackPublicRequest());
+
+            const {data} = await axiosApi.put('/tracks/' + trackId + '/publish');
+
+            if (data) {
+                dispatch(makeTrackPublicSuccess());
+                useToastSuccess(data.message);
+                dispatch(historyPush('/'));
+            }
+        } catch (e) {
+            dispatch(makeTrackPublicFailure(e));
+        }
+    };
+};
