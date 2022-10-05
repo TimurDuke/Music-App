@@ -12,7 +12,7 @@ import {
     GET_PERSONAL_ARTISTS_SUCCESS,
     GET_UNPUBLISH_ARTISTS_FAILURE,
     GET_UNPUBLISH_ARTISTS_REQUEST,
-    GET_UNPUBLISH_ARTISTS_SUCCESS,
+    GET_UNPUBLISH_ARTISTS_SUCCESS, MAKE_ARTIST_PUBLIC_FAILURE, MAKE_ARTIST_PUBLIC_REQUEST, MAKE_ARTIST_PUBLIC_SUCCESS,
 } from "../actions/artistsActions";
 
 const initialState = {
@@ -62,6 +62,13 @@ const reducer = (state = initialState, actions) => {
         case DELETE_ARTIST_SUCCESS:
             return {...state, artistsLoading: false, artistsError: null};
         case DELETE_ARTIST_FAILURE:
+            return {...state, artistsLoading: false, artistsError: actions.error};
+
+        case MAKE_ARTIST_PUBLIC_REQUEST:
+            return {...state, artistsLoading: true, artistsError: null};
+        case MAKE_ARTIST_PUBLIC_SUCCESS:
+            return {...state, artistsLoading: false, artistsError: null};
+        case MAKE_ARTIST_PUBLIC_FAILURE:
             return {...state, artistsLoading: false, artistsError: actions.error};
 
         default:

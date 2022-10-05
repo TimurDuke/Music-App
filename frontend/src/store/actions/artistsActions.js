@@ -131,3 +131,29 @@ export const deleteArtist = artistId => {
         }
     };
 };
+
+export const MAKE_ARTIST_PUBLIC_REQUEST = 'MAKE_ARTIST_PUBLIC_REQUEST';
+export const MAKE_ARTIST_PUBLIC_SUCCESS = 'MAKE_ARTIST_PUBLIC_SUCCESS';
+export const MAKE_ARTIST_PUBLIC_FAILURE = 'MAKE_ARTIST_PUBLIC_FAILURE';
+
+const makeArtistPublicRequest = () => ({type: MAKE_ARTIST_PUBLIC_REQUEST});
+const makeArtistPublicSuccess = () => ({type: MAKE_ARTIST_PUBLIC_SUCCESS});
+const makeArtistPublicFailure = error => ({type: MAKE_ARTIST_PUBLIC_FAILURE, error});
+
+export const makeArtistPublic = artistId => {
+    return async dispatch => {
+        try {
+            dispatch(makeArtistPublicRequest());
+
+            const {data} = await axiosApi.put('/artists/' + artistId + '/publish');
+
+            if (data) {
+                dispatch(makeArtistPublicSuccess());
+                useToastSuccess(data.message);
+                dispatch(historyPush('/'));
+            }
+        } catch (e) {
+            dispatch(makeArtistPublicFailure(e));
+        }
+    };
+};
