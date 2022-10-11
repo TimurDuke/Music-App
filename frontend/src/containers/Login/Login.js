@@ -42,7 +42,7 @@ const Login = () => {
     const loading = useSelector(state => state.users.loginLoading);
 
     const [user, setUser] = useState({
-        username: '',
+        email: '',
         password: '',
     });
 
@@ -88,9 +88,9 @@ const Login = () => {
                 >
                     <FormElement
                         required={true}
-                        label="Username"
-                        name="username"
-                        value={user.username}
+                        label="Email"
+                        name="email"
+                        value={user.email}
                         onChange={inputChangeHandler}
                     />
 

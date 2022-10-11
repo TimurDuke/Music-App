@@ -35,7 +35,7 @@ const Layout = ({children}) => {
                     </Grid>
                 </Grid>
             </AppBar>
-            <Toolbar sx={{marginBottom: {sm: '20px', xs: '70px'}}}/>
+            <Toolbar sx={{marginBottom: {sm: '20px', xs: '180px'}}}/>
             <Container maxWidth="xl">
                 {children}
             </Container>

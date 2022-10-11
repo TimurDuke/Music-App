@@ -4,11 +4,12 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from "react-router-dom";
-import {Box} from "@mui/material";
+import {CardMedia, Grid} from "@mui/material";
 import {useDispatch} from "react-redux";
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 
 import {logoutUser} from "../../../../store/actions/usersActions";
+import {apiUrl} from "../../../../config";
 
 const UserMenu = ({user}) => {
     const dispatch = useDispatch();
@@ -26,16 +27,17 @@ const UserMenu = ({user}) => {
 
     return (
         <div>
-            <Box
+            <Grid container alignItems='center' justifyContent='center'
                 sx={{
                     display: 'flex',
+                    alignItems: 'center',
                     justifyContent: 'center',
-                    alignItems: 'center'
-                }}
+                    flexDirection: {xs: 'column', sm: 'row'}
+            }}
             >
                 <Button
                     color='inherit'
-                    sx={{marginRight: "20px"}}
+                    sx={{marginRight: "20px", marginBottom: {xs: '10px', sm: "0"}}}
                     variant='outlined'
                     size='small'
                     component={Link}
@@ -60,11 +62,22 @@ const UserMenu = ({user}) => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
+                    size='large'
+                    startIcon={<VerifiedUserIcon sx={{marginLeft: '5px'}}/>}
+                    endIcon={
+                        <CardMedia
+                            component="img"
+                            height="30"
+                            image={apiUrl + user.avatarImage}
+                            sx={{borderRadius: '50%'}}
+                            alt="Avatar image"
+                        />
+                    }
+                    sx={{textTransform: 'capitalize'}}
                 >
-                    Hello, {user.username}!
-                    <VerifiedUserIcon sx={{marginLeft: '5px'}}/>
+                    Hello, {user.displayName}!
                 </Button>
-            </Box>
+            </Grid>
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
