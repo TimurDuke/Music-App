@@ -1,6 +1,7 @@
 import {useRef, useState} from "react";
 import {Button, Grid, TextField} from "@mui/material";
 import {makeStyles} from "tss-react/mui";
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 const useStyles = makeStyles()(() => ({
     input: {
@@ -8,7 +9,7 @@ const useStyles = makeStyles()(() => ({
     }
 }));
 
-const FileInput = ({onChange, name, label}) => {
+const FileInput = ({onChange, name, label, required, error}) => {
     const {classes} = useStyles();
     const inputRef = useRef();
 
@@ -45,10 +46,15 @@ const FileInput = ({onChange, name, label}) => {
                         label={label}
                         value={filename}
                         onClick={activateInput}
+                        required={required}
+                        error={Boolean(error)}
+                        helperText={error}
                     />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={activateInput}>Browse</Button>
+                    <Button variant="contained" onClick={activateInput}>
+                        <PhotoCamera/>
+                    </Button>
                 </Grid>
             </Grid>
         </>

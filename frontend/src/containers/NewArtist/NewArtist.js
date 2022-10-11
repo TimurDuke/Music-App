@@ -11,8 +11,8 @@ const NewArtist = () => {
     const artistsLoading = useSelector(state => state.artists.artistsLoading);
     const error = useSelector(state => state.artists.artistsError);
 
-    const onArtistFormSubmit = async artistData => {
-        await dispatch(createArtist(artistData));
+    const onArtistFormSubmit = artistData => {
+        dispatch(createArtist(artistData));
     };
 
     return (

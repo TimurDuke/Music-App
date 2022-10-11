@@ -72,7 +72,7 @@ const UserMenu = ({user}) => {
                             component="img"
                             height="30"
                             image={avatarImage}
-                            sx={{borderRadius: '50%'}}
+                            sx={{borderRadius: '50%', width: '30px'}}
                             alt="Avatar image"
                         />
                     }

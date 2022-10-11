@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 import {clearRegisterErrors, registerUser} from "../../store/actions/usersActions";
+import FileInput from "../../components/UI/Form/FileInput/FileInput";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -38,6 +39,9 @@ const Register = () => {
     const [user, setUser] = useState({
         username: '',
         password: '',
+        email: '',
+        displayName: '',
+        avatarImage: '',
     });
 
     useEffect(() => {
@@ -52,10 +56,23 @@ const Register = () => {
         setUser(prev => ({...prev, [name]: value}));
     };
 
+    const fileChangeHandler = e => {
+        const name = e.target.name;
+        const file = e.target.files[0];
+
+        setUser(prevState => ({...prevState, [name]: file}));
+    };
+
     const submitFormHandler = e => {
         e.preventDefault();
 
-        dispatch(registerUser({...user}));
+        const formData = new FormData();
+
+        Object.keys(user).forEach(key => {
+            formData.append(key, user[key]);
+        });
+
+        dispatch(registerUser(formData));
     };
 
     const getFieldError = fieldName => {
@@ -90,6 +107,35 @@ const Register = () => {
                         value={user.username}
                         error={getFieldError('username')}
                     />
+
+                    <FormElement
+                        name='email'
+                        label='Email'
+                        required={true}
+                        onChange={inputChangeHandler}
+                        value={user.email}
+                        error={getFieldError('email')}
+                    />
+
+                    <FormElement
+                        name='displayName'
+                        label='Display Name'
+                        required={true}
+                        onChange={inputChangeHandler}
+                        value={user.displayName}
+                        error={getFieldError('displayName')}
+                    />
+
+                    <Grid item xs={12}>
+                        <FileInput
+                            label="Avatar Image"
+                            name="avatarImage"
+                            onChange={fileChangeHandler}
+                            required={true}
+                            error={getFieldError('avatarImage')}
+                        />
+                    </Grid>
+
                     <FormElement
                         name='password'
                         label='Password'

@@ -19,19 +19,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.post('/', upload.single('image'), async (req, res) => {
-    const { username, password } = req.body;
-    const avatarImage = req.file ? req.file.filename : null;
-
-    if (!username || !password || !avatarImage) {
-        return res.status(400).send({error: "Data not valid"});
-    }
-
-    const userData = {username, password, avatarImage};
-
-    const user = new User(userData);
-
+router.post('/', upload.single('avatarImage'), async (req, res) => {
     try {
+        const { username, password, email, displayName } = req.body;
+
+        const avatarImage = req.file ? 'uploads/' + req.file.filename : null;
+
+        const userData = {username, password, avatarImage, email, displayName};
+
+        const user = new User(userData);
+
         user.generateToken();
         await user.save();
 
