@@ -41,18 +41,18 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 router.post('/sessions', async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({username});
+    const user = await User.findOne({email});
 
     if (!user) {
-        return res.status(401).send({message: "Username or password is wrong"});
+        return res.status(401).send({message: "Email or password is wrong"});
     }
 
     const isMatch = await user.checkPassword(password);
 
     if (!isMatch) {
-        return res.status(401).send({message: "Username or password is wrong"});
+        return res.status(401).send({message: "Email or password is wrong"});
     }
 
     user.generateToken();
