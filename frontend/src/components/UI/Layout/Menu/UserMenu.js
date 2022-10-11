@@ -15,6 +15,9 @@ const UserMenu = ({user}) => {
     const dispatch = useDispatch();
 
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const avatarImage = user.facebookId ? user.avatarImage : apiUrl + user.avatarImage;
+
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -68,7 +71,7 @@ const UserMenu = ({user}) => {
                         <CardMedia
                             component="img"
                             height="30"
-                            image={apiUrl + user.avatarImage}
+                            image={avatarImage}
                             sx={{borderRadius: '50%'}}
                             alt="Avatar image"
                         />

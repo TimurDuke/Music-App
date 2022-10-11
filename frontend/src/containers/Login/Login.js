@@ -9,6 +9,7 @@ import {clearLoginErrors, loginUser} from "../../store/actions/usersActions";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 import {clearHistoryState} from "../../store/actions/tracksHistoryActions";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles()(theme => ({
 }));
 
 const Login = () => {
-    const { classes } = useStyles();
+    const {classes} = useStyles();
 
     const dispatch = useDispatch();
 
@@ -115,6 +116,15 @@ const Login = () => {
                         >
                             Sign In
                         </ButtonWithProgress>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography
+                            variant='h6'
+                            sx={{textAlign: 'center'}}
+                        >
+                            Or sign in
+                        </Typography>
+                        <FacebookLogin/>
                     </Grid>
                 </Grid>
 

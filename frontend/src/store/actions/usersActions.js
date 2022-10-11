@@ -88,3 +88,24 @@ export const loginUser = userData => {
         }
     };
 };
+
+export const facebookLogin = fbUserData => {
+    return async dispatch => {
+        try {
+            dispatch(loginUserRequest());
+
+            const response = await axiosApi.post('/users/facebookLogin', fbUserData);
+
+            if (response.data) {
+                dispatch(loginUserSuccess(response.data));
+                dispatch(historyPush('/'));
+            }
+
+            if (response.status === 200) {
+                useToastSuccess('You have successfully logged in!');
+            }
+        } catch (e) {
+            dispatch(loginUserFailure(e.response.data));
+        }
+    };
+};
