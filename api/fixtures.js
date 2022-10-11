@@ -19,6 +19,7 @@ const run = async () => {
 
     const [user1, user2] = await User.create({
         username: "admin",
+        email: "admin@gmail.com",
         displayName: "Admin",
         avatarImage: "fixtures/admin.jpg",
         password: "admin",
@@ -26,6 +27,7 @@ const run = async () => {
         role: "admin",
     }, {
         username: "user",
+        email: "user@gmail.com",
         displayName: "User",
         avatarImage: "fixtures/user.jpg",
         password: "user",
