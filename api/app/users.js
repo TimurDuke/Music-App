@@ -1,16 +1,32 @@
 const express = require('express');
+const multer = require("multer");
+const uniqid = require("uniqid");
+const path = require("path");
+const config = require("../config");
 const User = require('../models/User');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-    const { username, password } = req.body;
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, config.uploadPath);
+    },
+    filename: (req, file, cb) => {
+        cb(null, uniqid() + path.extname(file.originalname));
+    },
+});
 
-    if (!username || !password) {
+const upload = multer({storage});
+
+router.post('/', upload.single('image'), async (req, res) => {
+    const { username, password } = req.body;
+    const avatarImage = req.file ? req.file.filename : null;
+
+    if (!username || !password || !avatarImage) {
         return res.status(400).send({error: "Data not valid"});
     }
 
-    const userData = {username, password};
+    const userData = {username, password, avatarImage};
 
     const user = new User(userData);
 
