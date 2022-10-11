@@ -16,9 +16,17 @@ const TrackForm = ({onSubmit, artistHandler, error, artists, albums}) => {
     const inputChangeHandler = e => {
         const {name, value} = e.target;
 
-        setTrackData(prevState => {
-            return {...prevState, [name]: value};
-        });
+        if (name === 'artist') {
+            setTrackData(prev => ({
+                ...prev,
+                album: ''
+            }));
+        }
+
+        setTrackData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     const artistInputHandler = artistId => {
